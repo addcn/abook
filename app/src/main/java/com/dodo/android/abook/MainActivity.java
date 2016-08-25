@@ -9,12 +9,34 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.RectF;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.util.Log;
+import android.graphics.Point;
+import android.graphics.Bitmap;
+import java.util.ArrayList;
+import java.util.List;
+import android.graphics.Rect;
+import android.graphics.RectF;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        /*setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -25,8 +47,13 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
+
+        //setContentView(new MyView(this));
+        setContentView(R.layout.activity_main);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
