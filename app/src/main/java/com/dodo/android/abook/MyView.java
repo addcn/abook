@@ -501,7 +501,7 @@ public class MyView extends View {
      * @param canvas
      */
     private void drawText(Canvas canvas) {
-
+        //
         mPaint.setFlags(Paint.ANTI_ALIAS_FLAG);//设置为抗锯齿
         mPaint.setTextSize(50.0f);//设置字体大小
 
@@ -516,8 +516,14 @@ public class MyView extends View {
         //canvas.drawPoints(new float[]{60, 400, 65, 400, 70, 400}, mPaint);//画多个点
         canvas.restore();
 
+        //原点画圆
+        canvas.save();
+        canvas.translate(0, 0);
+        mPaint.setColor(Color.RED);
+        canvas.drawCircle(10, 10, 10, mPaint);//x轴正向下，y轴正向右
+        canvas.restore();
 
-        //画圆
+        //画圆2
         canvas.save();
         canvas.drawCircle(canvas.getWidth() / 2, (canvas.getHeight() / 3) * 2, 8, mPaint);
         canvas.restore();
@@ -569,12 +575,12 @@ public class MyView extends View {
 
 
         //绘制文本
-        canvas.save();
+        /*canvas.save();
         canvas.translate(0, 0);
         mPaint.setStrokeWidth(10);
         mPaint.setTextSize(60.0f);
         canvas.drawText("文本绘制", 0, 0, mPaint);
-        canvas.restore();
+        canvas.restore();*/
 
 
         //---------------------------------------------------------------------
