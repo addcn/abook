@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathEffect;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -535,7 +534,7 @@ public class MyView extends View {
         //设置画直线格式
         mPaint.setStyle(Paint.Style.FILL);
         //设置虚线效果
-        PathEffect effects = new DashPathEffect(new float[] { 1, 2, 4, 8}, 1);
+        PathEffect effects = new DashPathEffect(new float[]{1, 2, 4, 8}, 1);
         //mPaint.setPathEffect(effects) ;
         canvas.drawLine(0, canvas.getHeight() / 3 * 1, canvas.getWidth(), canvas.getHeight() / 3 * 1, mPaint);
         canvas.drawLine(0, canvas.getHeight() / 3 * 2, canvas.getWidth(), canvas.getHeight() / 3 * 2, mPaint);
@@ -546,8 +545,6 @@ public class MyView extends View {
         canvas.drawLine(canvas.getWidth() / 3 * 3, 0, canvas.getWidth() / 3 * 3, canvas.getHeight(), mPaint);
 
         canvas.restore();
-
-
 
 
         // Canvas
@@ -571,7 +568,6 @@ public class MyView extends View {
         int baseline = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;
         canvas.drawText(testString,getMeasuredWidth() / 2 - bounds.width() / 2, baseline, mPaint);*/
         //(getMeasuredHeight()/2 + (fontMetrics.descent- fontMetrics.ascent)/2 - fontMetrics.descent，经测试这个会比你那个更精确一些
-
 
 
         //绘制文本
