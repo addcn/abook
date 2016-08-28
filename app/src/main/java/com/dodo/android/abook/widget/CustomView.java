@@ -1,4 +1,4 @@
-package com.dodo.android.abook;
+package com.dodo.android.abook.widget;
 
 import android.content.Context;
 import android.graphics.Paint;

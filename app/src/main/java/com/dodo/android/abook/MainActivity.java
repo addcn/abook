@@ -1,10 +1,13 @@
 package com.dodo.android.abook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,8 +20,25 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        initViews();
     }
 
+    public void initViews(){
+        TextView drawTextTv = (TextView)findViewById(R.id.tv_draw_text);
+        drawTextTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, GraphicsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("channelId", "1");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
