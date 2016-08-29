@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dodo.android.abook.DrawTextFragment">
+    tools:context="com.dodo.android.abook.CanvasFragment">
 
 
-    <com.dodo.android.abook.widget.MyDrawText
+    <com.dodo.android.abook.widget.MyExample
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

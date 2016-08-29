@@ -12,6 +12,7 @@ public class GraphicsActivity extends AppCompatActivity {
 
     private DrawTextFragment drawTextFragment;
     private CanvasFragment canvasFragment;
+    private ExampleFragment exampleFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,37 +26,19 @@ public class GraphicsActivity extends AppCompatActivity {
         drawTextFragment = (DrawTextFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         if (drawTextFragment == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            drawTextFragment = DrawTextFragment.newInstance();
-            transaction.add(R.id.fragment,drawTextFragment);
+            canvasFragment = new CanvasFragment();
+            transaction.add(R.id.fragment,canvasFragment);
             transaction.commit();
         }
 
         initViews();
     }
 
-    public void initViews(){
-        TextView drawTextTv = (TextView)findViewById(R.id.tv_draw_text);
-        drawTextTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent intent = new Intent();
-                intent.setClass(GraphicsActivity.this, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("channelId", "1");
-                intent.putExtras(bundle);
-                startActivity(intent);*/
-
-
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                drawTextFragment = DrawTextFragment.newInstance();
-                //transaction.add(R.id.fragment,drawTextFragment);
-                transaction.replace(R.id.fragment,drawTextFragment);
-                transaction.commit();
-
-
-            }
-        });
-
+    /**
+     * 初始視圖
+     */
+    private void initViews() {
+        //
         TextView canvasTv = (TextView)findViewById(R.id.tv_canvas);
         canvasTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +47,30 @@ public class GraphicsActivity extends AppCompatActivity {
                 canvasFragment = new CanvasFragment();
                 //transaction.add(R.id.fragment,canvasFragment);
                 transaction.replace(R.id.fragment,canvasFragment);
+                transaction.commit();
+            }
+        });
+        //
+        TextView drawTextTv = (TextView)findViewById(R.id.tv_draw_text);
+        drawTextTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                drawTextFragment = DrawTextFragment.newInstance();
+                //transaction.add(R.id.fragment,drawTextFragment);
+                transaction.replace(R.id.fragment,drawTextFragment);
+                transaction.commit();
+            }
+        });
+        //
+        TextView exampleTv = (TextView)findViewById(R.id.tv_example);
+        exampleTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                exampleFragment = new ExampleFragment();
+                //transaction.add(R.id.fragment,drawTextFragment);
+                transaction.replace(R.id.fragment,exampleFragment);
                 transaction.commit();
             }
         });
