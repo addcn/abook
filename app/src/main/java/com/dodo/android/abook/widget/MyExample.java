@@ -69,6 +69,8 @@ public class MyExample extends View {
         drawXYAxis(canvas);
         drawAxisText(canvas);
         drawNetLine(canvas);
+
+        drawBase(canvas);
     }
 
     /**
@@ -136,7 +138,7 @@ public class MyExample extends View {
     }
 
     /**
-     * 左上角指定点写字
+     * 四格线文字
      *
      * @param canvas
      */
@@ -211,6 +213,54 @@ public class MyExample extends View {
         canvas.drawLine(pos.x, bottom, mWidth, bottom, mPaint);
 
         canvas.restore();
+    }
+
+    /**
+     * 基本图形
+     *
+     * @param canvas
+     */
+    private void drawBase(Canvas canvas)
+    {
+        //绘制点
+        //1/12
+        Point pos = new Point(mWidth / 12 * 1, mHeight / 12 * 1);
+
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStrokeWidth(3 * mDensity);//设置线宽，如果不设置线宽，无法绘制点
+        mPaint.setStrokeCap(Paint.Cap.BUTT);
+
+        canvas.save();
+        canvas.translate(0, 0); //原点
+        canvas.drawPoint(pos.x, pos.y, mPaint);
+        canvas.restore();
+
+        //绘制线段
+
+        canvas.save();
+        mPaint.setColor(Color.GRAY);
+        mPaint.setStrokeWidth(5);
+        canvas.translate(0, 0);
+        canvas.drawLine(5, mWidth/6 - 8 - 10*mDensity, mWidth/6 - 5, mWidth/6 - 8 - 10*mDensity, mPaint);//直线
+
+        float[] pts = {
+                5, mWidth/6 - 8, mWidth/6 - 5 , mWidth/6 - 8
+        };
+        mPaint.setColor(Color.BLUE);
+        canvas.drawLines(pts, mPaint);//折线
+        canvas.restore();
+
+        //画圆
+        canvas.save();
+        canvas.drawCircle(mWidth / 12 * 3, mWidth / 12 * 1, 20, mPaint);
+        canvas.restore();
+
+        //矩形
+        canvas.save();
+        canvas.drawRect(mWidth / 12 * 4 +5* mDensity, 5* mDensity, mWidth / 12 * 6 - 5* mDensity, mHeight / 12 * 2 -5* mDensity, mPaint);
+        canvas.restore();
+
     }
 
 }
