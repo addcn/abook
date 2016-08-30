@@ -78,6 +78,7 @@ public class MyExample extends View {
         drawAxis(canvas);
         drawNetLine(canvas);
         drawText(canvas);
+        drawTextOnPath(canvas);
         drawBaseShape(canvas);
         drawBitmap(canvas);
         drawPath(canvas);
@@ -229,6 +230,64 @@ public class MyExample extends View {
         //画bottom
         mPaint.setColor(0xff007f57);//设置颜色
         canvas.drawLine(pos.x, bottom, mWidth, bottom, mPaint);
+
+        canvas.restore();
+    }
+
+    /**
+     * 文字
+     *
+     * @param canvas
+     */
+    private void drawTextOnPath(Canvas canvas)
+    {
+        String text = "风萧萧兮易水寒，壮士一去兮不复返";
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.RED);  //设置颜色
+        mPaint.setStrokeWidth(5);//设置宽度
+        mPaint.setAntiAlias(true); //抗锯齿功能，如果使用，会使绘图速度变慢
+        mPaint.setStyle(Paint.Style.STROKE);//设置填充
+
+        //画布
+        canvas.save();
+        canvas.translate(0, 0); //原点
+
+        //先创建两个相同的圆形路径，并先画出两个路径原图
+        Path circlePath = new Path();
+        Point pos = new Point(mWidth / 6 * 2, mHeight / 6 * 5 - mHeight / 6 * 1/2);
+        circlePath.addCircle(pos.x, pos.y, 120, Path.Direction.CCW);//逆向绘制
+        canvas.drawPath(circlePath, mPaint);//绘制出路径原形
+
+        Path circlePath2 = new Path();
+        Point pos2 = new Point(mWidth / 6 * 4, mHeight / 6 * 5 - mHeight / 6 * 1/2);
+        circlePath2.addCircle(pos2.x, pos2.y, 120, Path.Direction.CCW);
+        canvas.drawPath(circlePath2, mPaint);//绘制出路径原形
+
+        //辅助点（圆）
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+        canvas.drawCircle(pos2.x, pos2.y, 3, mPaint);
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.BLACK);//设置颜色
+        mPaint.setTextSize(45);//设置大小
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        //hoffset、voffset参数值全部设为0，看原始状态是怎样的
+        canvas.drawTextOnPath(text, circlePath, 0, 0, mPaint);
+        //第二个路径，改变hoffset、voffset参数值
+        canvas.drawTextOnPath(text, circlePath2, 80, 30, mPaint);
+
+        //辅助点（圆）
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+        canvas.drawCircle(pos.x, pos.y, 3, mPaint);
 
         canvas.restore();
     }
