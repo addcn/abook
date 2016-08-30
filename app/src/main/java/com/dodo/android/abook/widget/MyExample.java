@@ -1,16 +1,21 @@
 package com.dodo.android.abook.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.dodo.android.abook.R;
 
 /**
  * Created by dodo on 2016/8/25.
@@ -71,6 +76,7 @@ public class MyExample extends View {
         drawNetLine(canvas);
         drawText(canvas);
         drawBaseShape(canvas);
+        drawBitmap(canvas);
     }
 
     /**
@@ -431,7 +437,7 @@ public class MyExample extends View {
     }
 
     /**
-     * 弧1（1/6格子）
+     * 弧（1/6格子）
      *
      * @param canvas
      */
@@ -483,6 +489,46 @@ public class MyExample extends View {
         canvas.drawArc(rect, 0, 180, false, mPaint); //差异点！
 
         canvas.restore();
+    }
+
+    /**
+     * 绘制图
+     *
+     * @param canvas
+     */
+    private void drawBitmap(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        int padding = (int)(5*mDensity);
+
+        //bitmap
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        Point pos = new Point(mWidth / 6 * 2 + padding, mHeight / 6 * 1 + padding);
+        canvas.drawBitmap(bitmap, pos.x, pos.y, mPaint);//完全绘制Bitmap
+
+        //绘制Bitmap的一部分，并对其拉伸
+        //srcRect定义了要绘制Bitmap的哪一部分
+        Rect srcRect = new Rect();
+        srcRect.left = 0;
+        srcRect.right = bitmap.getWidth();
+        srcRect.top = 0;
+        srcRect.bottom = (int) (0.66 * bitmap.getHeight());
+
+        float radio = (float) (srcRect.bottom - srcRect.top) / bitmap.getWidth();
+
+        //dstRecF定义了要将绘制的Bitmap拉伸到哪里
+        left = mWidth / 6 * 3 + padding;
+        top = mHeight / 6 * 1 + padding;
+        right = mWidth / 6 * 4 - padding;
+        float dstHeight = (right - left)*radio - padding;
+        bottom = top + dstHeight;
+        RectF dstRecF = new RectF(left, top, right, bottom);
+        canvas.drawBitmap(bitmap, srcRect, dstRecF, mPaint);
+
+        bitmap = null;
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+        }
     }
 
 }
