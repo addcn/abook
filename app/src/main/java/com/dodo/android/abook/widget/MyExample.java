@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
@@ -34,6 +33,7 @@ public class MyExample extends View {
 
     /**
      * New一个View的时候调用
+     *
      * @param context
      */
     public MyExample(Context context) {
@@ -43,6 +43,7 @@ public class MyExample extends View {
 
     /**
      * layout文件中使用的时候会调用
+     *
      * @param context
      * @param attrs
      */
@@ -92,8 +93,8 @@ public class MyExample extends View {
      */
     private void drawAxis(Canvas canvas) {
         // 配置参数
-        int lenX = mWidth/2; //x轴长度
-        int lenY = mHeight/2; //y轴长度
+        int lenX = mWidth / 2; //x轴长度
+        int lenY = mHeight / 2; //y轴长度
         int arrowW = 15; //坐标箭头张度
         int arrowL = 30; //坐标箭头长度
 
@@ -163,8 +164,7 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawText(Canvas canvas)
-    {
+    private void drawText(Canvas canvas) {
         String text = "中文：AaGg:1234";
 
         //6等分
@@ -239,8 +239,7 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawTextOnPath(Canvas canvas)
-    {
+    private void drawTextOnPath(Canvas canvas) {
         String text = "风萧萧兮易水寒，壮士一去兮不复返";
 
         //画笔
@@ -256,12 +255,12 @@ public class MyExample extends View {
 
         //先创建两个相同的圆形路径，并先画出两个路径原图
         Path circlePath = new Path();
-        Point pos = new Point(mWidth / 6 * 2, mHeight / 6 * 5 - mHeight / 6 * 1/2);
+        Point pos = new Point(mWidth / 6 * 2, mHeight / 6 * 5 - mHeight / 6 * 1 / 2);
         circlePath.addCircle(pos.x, pos.y, 120, Path.Direction.CCW);//逆向绘制
         canvas.drawPath(circlePath, mPaint);//绘制出路径原形
 
         Path circlePath2 = new Path();
-        Point pos2 = new Point(mWidth / 6 * 4, mHeight / 6 * 5 - mHeight / 6 * 1/2);
+        Point pos2 = new Point(mWidth / 6 * 4, mHeight / 6 * 5 - mHeight / 6 * 1 / 2);
         circlePath2.addCircle(pos2.x, pos2.y, 120, Path.Direction.CCW);
         canvas.drawPath(circlePath2, mPaint);//绘制出路径原形
 
@@ -297,8 +296,7 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawBaseShape(Canvas canvas)
-    {
+    private void drawBaseShape(Canvas canvas) {
         drawPoint(canvas); //1/6格子
         drawLine(canvas); //2/6格子
         drawCircle(canvas); //3/6格子
@@ -309,15 +307,15 @@ public class MyExample extends View {
         drawArc(canvas); //1/6格子
         drawArc2(canvas); //2/6格子
     }
+
     /**
      * 点（1/6格子）
      *
      * @param canvas
      */
-    private void drawPoint(Canvas canvas)
-    {
+    private void drawPoint(Canvas canvas) {
         //1/18
-        Point pos = new Point(mWidth / 18 * 1 + mWidth / 18 * 1/2, mHeight / 18 * 1);
+        Point pos = new Point(mWidth / 18 * 1 + mWidth / 18 * 1 / 2, mHeight / 18 * 1);
 
         //画笔
         mPaint.reset();
@@ -337,8 +335,7 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawLine(Canvas canvas)
-    {
+    private void drawLine(Canvas canvas) {
         //画笔
         mPaint.reset();
         mPaint.setColor(Color.GRAY);//设置颜色
@@ -347,7 +344,7 @@ public class MyExample extends View {
         /**
          * 线段1
          */
-        int padding = (int)(5*mDensity);
+        int padding = (int) (5 * mDensity);
         Point pos = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 1);
         Point pos1 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 1);
 
@@ -362,10 +359,10 @@ public class MyExample extends View {
         mPaint.setColor(Color.RED);//设置颜色
         Point pos11 = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 2);
         Point pos12 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 2);
-        Point pos13 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1/2, mHeight / 18 * 1 + padding);
-        Point pos14 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1/2, mHeight / 18 * 3 - padding);
+        Point pos13 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1 / 2, mHeight / 18 * 1 + padding);
+        Point pos14 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1 / 2, mHeight / 18 * 3 - padding);
 
-        float[] pts = {pos11.x, pos11.y, pos12.x , pos12.y, pos13.x , pos13.y, pos14.x , pos14.y}; //两两连成一条直线
+        float[] pts = {pos11.x, pos11.y, pos12.x, pos12.y, pos13.x, pos13.y, pos14.x, pos14.y}; //两两连成一条直线
         canvas.drawLines(pts, mPaint);//折线
         canvas.restore();
     }
@@ -375,12 +372,11 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawCircle(Canvas canvas)
-    {
+    private void drawCircle(Canvas canvas) {
         /**
          * 圆1
          */
-        Point pos = new Point(mWidth / 18 * 7 + mWidth / 18 * 1/2, mHeight / 18 * 1);
+        Point pos = new Point(mWidth / 18 * 7 + mWidth / 18 * 1 / 2, mHeight / 18 * 1);
 
         //画笔
         mPaint.reset();
@@ -402,7 +398,7 @@ public class MyExample extends View {
         /**
          * 圆2
          */
-        Point pos1 = new Point(mWidth / 18 * 7 + mWidth / 18 * 1/2, mHeight / 18 * 2);
+        Point pos1 = new Point(mWidth / 18 * 7 + mWidth / 18 * 1 / 2, mHeight / 18 * 2);
 
         mPaint.setColor(Color.GRAY);//设置颜色
         mPaint.setStyle(Paint.Style.STROKE);//设置填充
@@ -423,10 +419,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawEllipse(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        float padding = 5*mDensity;
+    private void drawEllipse(Canvas canvas) {
+        float left, top, right, bottom;
+        float padding = 5 * mDensity;
 
         //画笔
         mPaint.reset();
@@ -453,10 +448,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawRectangle(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        float padding = 5*mDensity;
+    private void drawRectangle(Canvas canvas) {
+        float left, top, right, bottom;
+        float padding = 5 * mDensity;
 
         //画笔
         mPaint.reset();
@@ -478,10 +472,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawRectangle2(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        float padding = 5*mDensity;
+    private void drawRectangle2(Canvas canvas) {
+        float left, top, right, bottom;
+        float padding = 5 * mDensity;
 
         //画笔
         mPaint.reset();
@@ -505,10 +498,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawArc(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        float padding = 5*mDensity;
+    private void drawArc(Canvas canvas) {
+        float left, top, right, bottom;
+        float padding = 5 * mDensity;
 
         //画笔
         mPaint.setColor(Color.GRAY);  //设置颜色
@@ -533,10 +525,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawArc2(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        float padding = 5*mDensity;
+    private void drawArc2(Canvas canvas) {
+        float left, top, right, bottom;
+        float padding = 5 * mDensity;
 
         //画笔
         mPaint.setColor(Color.GRAY);  //设置颜色
@@ -560,10 +551,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawBitmap(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        int padding = (int)(5*mDensity);
+    private void drawBitmap(Canvas canvas) {
+        float left, top, right, bottom;
+        int padding = (int) (5 * mDensity);
 
         Point pos = new Point(mWidth / 6 * 2 + padding, mHeight / 6 * 1 + padding);
 
@@ -585,7 +575,7 @@ public class MyExample extends View {
         left = mWidth / 6 * 3 + padding;
         top = mHeight / 6 * 1 + padding;
         right = mWidth / 6 * 4 - padding;
-        float dstHeight = (right - left)*radio - padding;
+        float dstHeight = (right - left) * radio - padding;
         bottom = top + dstHeight;
         RectF dstRecF = new RectF(left, top, right, bottom);
         canvas.drawBitmap(bitmap, srcRect, dstRecF, mPaint);
@@ -601,10 +591,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawPath(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        int padding = (int)(5*mDensity);
+    private void drawPath(Canvas canvas) {
+        float left, top, right, bottom;
+        int padding = (int) (5 * mDensity);
 
         //画笔
         mPaint.reset();
@@ -634,10 +623,9 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawBezier(Canvas canvas)
-    {
-        float left,top,right,bottom;
-        int padding = (int)(5*mDensity);
+    private void drawBezier(Canvas canvas) {
+        float left, top, right, bottom;
+        int padding = (int) (5 * mDensity);
         Point pos = new Point(padding, mHeight / 6 * 2 + padding);
 
         mPaint.setColor(0xff8bc5ba);//设置颜色

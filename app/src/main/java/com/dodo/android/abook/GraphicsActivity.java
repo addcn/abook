@@ -28,7 +28,7 @@ public class GraphicsActivity extends AppCompatActivity {
         if (drawTextFragment == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             exampleFragment = new ExampleFragment();
-            transaction.add(R.id.fragment,exampleFragment);
+            transaction.add(R.id.fragment, exampleFragment);
             transaction.commit();
         }
 
@@ -40,9 +40,9 @@ public class GraphicsActivity extends AppCompatActivity {
      */
     private void initViews() {
         //
-        canvasTv = (TextView)findViewById(R.id.tv_canvas);
-        drawTextTv = (TextView)findViewById(R.id.tv_draw_text);
-        exampleTv = (TextView)findViewById(R.id.tv_example);
+        canvasTv = (TextView) findViewById(R.id.tv_canvas);
+        drawTextTv = (TextView) findViewById(R.id.tv_draw_text);
+        exampleTv = (TextView) findViewById(R.id.tv_example);
 
         //
         canvasTv.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +66,7 @@ public class GraphicsActivity extends AppCompatActivity {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 drawTextFragment = DrawTextFragment.newInstance();
                 //transaction.add(R.id.fragment,drawTextFragment);
-                transaction.replace(R.id.fragment,drawTextFragment);
+                transaction.replace(R.id.fragment, drawTextFragment);
                 transaction.commit();
 
                 //
@@ -90,11 +90,11 @@ public class GraphicsActivity extends AppCompatActivity {
     }
 
 
-    private void hghlightSel(View view){
+    private void hghlightSel(View view) {
         canvasTv.setBackgroundColor(0xffdddddd);
         drawTextTv.setBackgroundColor(0xffdddddd);
         exampleTv.setBackgroundColor(0xffdddddd);
 
-        ((TextView)view).setBackgroundColor(0xffffffff);
+        ((TextView) view).setBackgroundColor(0xffffffff);
     }
 }
