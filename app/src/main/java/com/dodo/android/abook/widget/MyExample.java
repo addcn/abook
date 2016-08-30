@@ -7,6 +7,7 @@ import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
@@ -66,11 +67,10 @@ public class MyExample extends View {
         mHeight = canvas.getHeight();
         mDensity = getResources().getDisplayMetrics().density;
         //
-        drawXYAxis(canvas);
-        drawAxisText(canvas);
+        drawAxis(canvas);
         drawNetLine(canvas);
-
-        drawBase(canvas);
+        drawText(canvas);
+        drawBaseShape(canvas);
     }
 
     /**
@@ -78,7 +78,7 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawXYAxis(Canvas canvas) {
+    private void drawAxis(Canvas canvas) {
         // 配置参数
         int lenX = mWidth/2; //x轴长度
         int lenY = mHeight/2; //y轴长度
@@ -119,61 +119,58 @@ public class MyExample extends View {
      * @param canvas
      */
     private void drawNetLine(Canvas canvas) {
+        //画笔
         mPaint.reset();
-        mPaint.setStrokeWidth(1);
-        mPaint.setColor(Color.GRAY);
-        mPaint.setStyle(Paint.Style.STROKE);
-        //mPaint.setPathEffect(new DashPathEffect(new float[]{1, 2, 4, 8}, 2)) ;//虚线
+        mPaint.setColor(Color.GRAY);//设置颜色
+        mPaint.setStrokeWidth(1);//设置线宽
+        mPaint.setStyle(Paint.Style.STROKE);//设置填充
+        mPaint.setStrokeCap(Paint.Cap.BUTT);//设置笔帽
+        //mPaint.setPathEffect(new DashPathEffect(new float[]{1, 2, 4, 8}, 2)) ;//设置虚线
 
+        //画布
         canvas.save();
         canvas.translate(0, 0); //原点
-        canvas.drawLine(0, mHeight / 3 * 1, mWidth, mHeight / 3 * 1, mPaint);
-        canvas.drawLine(0, mHeight / 3 * 2, mWidth, mHeight / 3 * 2, mPaint);
-        canvas.drawLine(0, mHeight / 3 * 3, mWidth, mHeight / 3 * 3, mPaint);
-
-        canvas.drawLine(mWidth / 3 * 1, 0, mWidth / 3 * 1, mHeight, mPaint);
-        canvas.drawLine(mWidth / 3 * 2, 0, mWidth / 3 * 2, mHeight, mPaint);
-        canvas.drawLine(mWidth / 3 * 3, 0, mWidth / 3 * 3, mHeight, mPaint);
+        //X轴线(6等分)
+        canvas.drawLine(0, mHeight / 6 * 1, mWidth, mHeight / 6 * 1, mPaint);
+        canvas.drawLine(0, mHeight / 6 * 2, mWidth, mHeight / 6 * 2, mPaint);
+        canvas.drawLine(0, mHeight / 6 * 3, mWidth, mHeight / 6 * 3, mPaint);
+        canvas.drawLine(0, mHeight / 6 * 4, mWidth, mHeight / 6 * 4, mPaint);
+        canvas.drawLine(0, mHeight / 6 * 5, mWidth, mHeight / 6 * 5, mPaint);
+        //Y轴线(6等分)
+        canvas.drawLine(mWidth / 6 * 1, 0, mWidth / 6 * 1, mHeight, mPaint);
+        canvas.drawLine(mWidth / 6 * 2, 0, mWidth / 6 * 2, mHeight, mPaint);
+        canvas.drawLine(mWidth / 6 * 3, 0, mWidth / 6 * 3, mHeight, mPaint);
+        canvas.drawLine(mWidth / 6 * 4, 0, mWidth / 6 * 4, mHeight, mPaint);
+        canvas.drawLine(mWidth / 6 * 5, 0, mWidth / 6 * 5, mHeight, mPaint);
         canvas.restore();
     }
 
     /**
      * 四格线文字
+     * 默认坐标Y为基线坐标，通过计算，转换为文字左上角坐标点
      *
      * @param canvas
      */
-    private void drawAxisText(Canvas canvas)
+    private void drawText(Canvas canvas)
     {
         String text = "中文：AaGg:1234";
 
-        //1/6
-        Point pos = new Point(mWidth / 6 * 1, mHeight / 6 * 1); //写字点，y为四线格的top
-
-        /**
-         * 辅助网格
-         */
-        //网格线画笔
-        mPaint.reset();
-        mPaint.setStrokeWidth(1);
-        mPaint.setColor(Color.RED);
-
-        //网格线绘制
-        canvas.save();
-        canvas.translate(0, 0); //原点
-        canvas.drawLine(0, pos.y, mWidth, pos.y, mPaint);//X轴线
-        canvas.drawLine(pos.x, 0, pos.x, mHeight, mPaint);//Y轴线
+        //6等分
+        Point pos = new Point(mWidth / 6 * 1, mHeight / 6 * 5); //写字点，y为四线格的top
 
         /**
          * 内容文字
          */
-        //文字画笔
+        //画笔
         mPaint.reset();
-        //mPaint.setStrokeWidth(1);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setTextSize(24 * mDensity); //以px为单位
+        mPaint.setColor(Color.BLACK);//设置颜色
+        //mPaint.setStrokeWidth(1);//设置线宽
+        //mPaint.setStyle(Paint.Style.STROKE);//设置填充
+        //mPaint.setStrokeCap(Paint.Cap.BUTT);//设置笔帽
+        mPaint.setTextSize(35 * mDensity); //以px为单位
         mPaint.setTextAlign(Paint.Align.LEFT);//默认为左对齐
 
-        //计算各线在位置
+        //计算各线位置
         Paint.FontMetricsInt fm = mPaint.getFontMetricsInt();//FontMetricsInt对象
         int baseLineY = pos.y - fm.top;
         float ascent = baseLineY + fm.ascent;
@@ -181,35 +178,45 @@ public class MyExample extends View {
         float top = baseLineY + fm.top;
         float bottom = baseLineY + fm.bottom;
 
-        //绘制文字
+        //画布
+        canvas.save();
         canvas.translate(0, 0); //原点
         canvas.drawText(text, pos.x, baseLineY, mPaint);
 
         /**
+         * 辅助点（圆）
+         */
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+        canvas.drawCircle(pos.x, pos.y, 8, mPaint);
+
+        /**
          * 四格线
          */
-        //网格线画笔
+        //画笔
         mPaint.reset();
-        mPaint.setStrokeWidth(5);
+        mPaint.setStrokeWidth(5);//设置线宽
 
         //画基线
-        mPaint.setColor(Color.RED);
+        mPaint.setColor(Color.RED);//设置颜色
         canvas.drawLine(pos.x, baseLineY, mWidth, baseLineY, mPaint);
 
         //画top
-        mPaint.setColor(Color.BLUE);
+        mPaint.setColor(Color.BLUE);//设置颜色
         canvas.drawLine(pos.x, top, mWidth, top, mPaint);
 
         //画ascent
-        mPaint.setColor(0xff0c76c0);
+        mPaint.setColor(0xff0c76c0);//设置颜色
         canvas.drawLine(pos.x, ascent, mWidth, ascent, mPaint);
 
         //画descent
-        mPaint.setColor(0xfffd8403);
+        mPaint.setColor(0xfffd8403);//设置颜色
         canvas.drawLine(pos.x, descent, mWidth, descent, mPaint);
 
         //画bottom
-        mPaint.setColor(0xff007f57);
+        mPaint.setColor(0xff007f57);//设置颜色
         canvas.drawLine(pos.x, bottom, mWidth, bottom, mPaint);
 
         canvas.restore();
@@ -220,47 +227,262 @@ public class MyExample extends View {
      *
      * @param canvas
      */
-    private void drawBase(Canvas canvas)
+    private void drawBaseShape(Canvas canvas)
     {
-        //绘制点
-        //1/12
-        Point pos = new Point(mWidth / 12 * 1, mHeight / 12 * 1);
+        drawPoint(canvas); //1/6格子
+        drawLine(canvas); //2/6格子
+        drawCircle(canvas); //3/6格子
+        drawEllipse(canvas); //4/6格子
+        drawRectangle(canvas); //5/6格子
+        drawRectangle2(canvas); //6/6格子
 
+        drawArc(canvas); //1/6格子
+        drawArc2(canvas); //2/6格子
+    }
+    /**
+     * 点（1/6格子）
+     *
+     * @param canvas
+     */
+    private void drawPoint(Canvas canvas)
+    {
+        //1/18
+        Point pos = new Point(mWidth / 18 * 1 + mWidth / 18 * 1/2, mHeight / 18 * 1);
+
+        //画笔
         mPaint.reset();
         mPaint.setColor(Color.RED);//设置颜色
-        mPaint.setStrokeWidth(3 * mDensity);//设置线宽，如果不设置线宽，无法绘制点
-        mPaint.setStrokeCap(Paint.Cap.BUTT);
+        mPaint.setStrokeWidth(5 * mDensity);//设置线宽，如果不设置线宽，无法绘制点
+        mPaint.setStrokeCap(Paint.Cap.BUTT);//设置笔帽
 
+        //画布
         canvas.save();
         canvas.translate(0, 0); //原点
         canvas.drawPoint(pos.x, pos.y, mPaint);
         canvas.restore();
+    }
 
-        //绘制线段
+    /**
+     * 线段（2/6格子）
+     *
+     * @param canvas
+     */
+    private void drawLine(Canvas canvas)
+    {
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.GRAY);//设置颜色
+        mPaint.setStrokeWidth(10);//设置线宽
 
+        /**
+         * 线段1
+         */
+        int padding = (int)(5*mDensity);
+        Point pos = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 1);
+        Point pos1 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 1);
+
+        //画布
         canvas.save();
-        mPaint.setColor(Color.GRAY);
-        mPaint.setStrokeWidth(5);
         canvas.translate(0, 0);
-        canvas.drawLine(5, mWidth/6 - 8 - 10*mDensity, mWidth/6 - 5, mWidth/6 - 8 - 10*mDensity, mPaint);//直线
+        canvas.drawLine(pos.x, pos.y, pos1.x, pos1.y, mPaint);//直线
 
-        float[] pts = {
-                5, mWidth/6 - 8, mWidth/6 - 5 , mWidth/6 - 8
-        };
-        mPaint.setColor(Color.BLUE);
+        /**
+         * 线段2
+         */
+        mPaint.setColor(Color.RED);//设置颜色
+        Point pos11 = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 2);
+        Point pos12 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 2);
+        Point pos13 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1/2, mHeight / 18 * 1 + padding);
+        Point pos14 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1/2, mHeight / 18 * 3 - padding);
+
+        float[] pts = {pos11.x, pos11.y, pos12.x , pos12.y, pos13.x , pos13.y, pos14.x , pos14.y}; //两两连成一条直线
         canvas.drawLines(pts, mPaint);//折线
         canvas.restore();
+    }
 
-        //画圆
+    /**
+     * 圆（3/6格子）
+     *
+     * @param canvas
+     */
+    private void drawCircle(Canvas canvas)
+    {
+        /**
+         * 圆1
+         */
+        Point pos = new Point(mWidth / 18 * 7 + mWidth / 18 * 1/2, mHeight / 18 * 1);
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.GRAY);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+
+        //画布
         canvas.save();
-        canvas.drawCircle(mWidth / 12 * 3, mWidth / 12 * 1, 20, mPaint);
-        canvas.restore();
+        canvas.drawCircle(pos.x, pos.y, 30, mPaint);
 
-        //矩形
+        //辅助点（圆）
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+        canvas.drawCircle(pos.x, pos.y, 3, mPaint);
+
+        /**
+         * 圆2
+         */
+        Point pos1 = new Point(mWidth / 18 * 7 + mWidth / 18 * 1/2, mHeight / 18 * 2);
+
+        mPaint.setColor(Color.GRAY);//设置颜色
+        mPaint.setStyle(Paint.Style.STROKE);//设置填充
+        canvas.drawCircle(pos1.x, pos1.y, 70, mPaint);
+
+        //辅助点（圆）
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+        canvas.drawCircle(pos1.x, pos1.y, 3, mPaint);
+
+        canvas.restore();
+    }
+
+    /**
+     * 椭圆（4/6格子）
+     *
+     * @param canvas
+     */
+    private void drawEllipse(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        float padding = 5*mDensity;
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.RED);//设置颜色
+        mPaint.setStyle(Paint.Style.STROKE);//设置填充
+        mPaint.setStrokeWidth(5);//设置宽度
+        //画布
         canvas.save();
-        canvas.drawRect(mWidth / 12 * 4 +5* mDensity, 5* mDensity, mWidth / 12 * 6 - 5* mDensity, mHeight / 12 * 2 -5* mDensity, mPaint);
-        canvas.restore();
+        left = mWidth / 6 * 3 + padding;
+        top = 5 * mDensity;
+        right = mWidth / 6 * 4 - padding;
+        bottom = mHeight / 6 * 1 - padding;
 
+        RectF rect = new RectF(left, top, right, bottom);
+        canvas.drawRect(rect, mPaint);//画矩形
+
+        mPaint.setColor(Color.GRAY);//更改画笔颜色
+        canvas.drawOval(rect, mPaint);//同一个矩形画椭圆
+        canvas.restore();
+    }
+
+    /**
+     * 矩形（5/6格子）
+     *
+     * @param canvas
+     */
+    private void drawRectangle(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        float padding = 5*mDensity;
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.GRAY);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+
+        //画布
+        canvas.save();
+        left = mWidth / 6 * 4 + padding;
+        top = 5 * mDensity;
+        right = mWidth / 6 * 5 - padding;
+        bottom = mHeight / 6 * 1 - padding;
+        canvas.drawRect(left, top, right, bottom, mPaint);
+        canvas.restore();
+    }
+
+    /**
+     * 圆角矩形（6/6格子）
+     *
+     * @param canvas
+     */
+    private void drawRectangle2(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        float padding = 5*mDensity;
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(Color.GRAY);//设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+
+        //画布
+        canvas.save();
+        left = mWidth / 6 * 5 + padding;
+        top = 5 * mDensity;
+        right = mWidth / 6 * 6 - padding;
+        bottom = mHeight / 6 * 1 - padding;
+        RectF rect = new RectF(left, top, right, bottom);
+        canvas.drawRoundRect(rect, 20, 20, mPaint);
+        canvas.restore();
+    }
+
+    /**
+     * 弧1（1/6格子）
+     *
+     * @param canvas
+     */
+    private void drawArc(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        float padding = 5*mDensity;
+
+        //画笔
+        mPaint.setColor(Color.GRAY);  //设置颜色
+        mPaint.setStyle(Paint.Style.STROKE);//设置填充
+        mPaint.setStrokeWidth(5);//设置线宽
+
+        //画布
+        canvas.save();
+        //弧1
+        left = padding;
+        top = mWidth / 6 * 1 + padding;
+        right = mWidth / 6 * 1 - padding;
+        bottom = mHeight / 6 * 2 - padding;
+        RectF rect = new RectF(left, top, right, bottom);
+        canvas.drawArc(rect, 0, 90, true, mPaint);
+
+        canvas.restore();
+    }
+
+    /**
+     * 弧2（2/6格子）
+     *
+     * @param canvas
+     */
+    private void drawArc2(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        float padding = 5*mDensity;
+
+        //画笔
+        mPaint.setColor(Color.GRAY);  //设置颜色
+        mPaint.setStyle(Paint.Style.FILL);//设置填充，差异点！
+        mPaint.setStrokeWidth(5);//设置线宽
+
+        //画布
+        canvas.save();
+        left = mWidth / 6 * 1 + padding;
+        top = mWidth / 6 * 1 + padding;
+        right = mWidth / 6 * 2 - padding;
+        bottom = mHeight / 6 * 2 - padding;
+        RectF rect = new RectF(left, top, right, bottom);
+        canvas.drawArc(rect, 0, 180, false, mPaint); //差异点！
+
+        canvas.restore();
     }
 
 }

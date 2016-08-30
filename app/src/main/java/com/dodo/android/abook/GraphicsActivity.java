@@ -21,7 +21,6 @@ public class GraphicsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         // Create the fragment
         drawTextFragment = (DrawTextFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         if (drawTextFragment == null) {
@@ -74,8 +73,5 @@ public class GraphicsActivity extends AppCompatActivity {
                 transaction.commit();
             }
         });
-
-
-
     }
 }
