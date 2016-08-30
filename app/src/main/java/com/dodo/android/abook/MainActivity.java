@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initViews(){
-        TextView drawTextTv = (TextView)findViewById(R.id.tv_draw_text);
-        drawTextTv.setOnClickListener(new View.OnClickListener() {
+        TextView exampleTv = (TextView)findViewById(R.id.tv_example);
+        exampleTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();

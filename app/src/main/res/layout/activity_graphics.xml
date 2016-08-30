@@ -43,18 +43,17 @@
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:text="tcanvas"
+                android:text="Canvas"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/tv_draw_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
                 android:layout_weight="1"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:text="drawtext"
+                android:text="Drawtext"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -62,9 +61,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="#ffffff"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center"
-                android:text="example"
+                android:text="Demo"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
         </LinearLayout>

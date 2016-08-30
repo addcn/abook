@@ -17,6 +17,9 @@ import android.view.View;
 
 import com.dodo.android.abook.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by dodo on 2016/8/25.
  */
@@ -77,6 +80,8 @@ public class MyExample extends View {
         drawText(canvas);
         drawBaseShape(canvas);
         drawBitmap(canvas);
+        drawPath(canvas);
+        drawBezier(canvas);
     }
 
     /**
@@ -501,9 +506,10 @@ public class MyExample extends View {
         float left,top,right,bottom;
         int padding = (int)(5*mDensity);
 
+        Point pos = new Point(mWidth / 6 * 2 + padding, mHeight / 6 * 1 + padding);
+
         //bitmap
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        Point pos = new Point(mWidth / 6 * 2 + padding, mHeight / 6 * 1 + padding);
         canvas.drawBitmap(bitmap, pos.x, pos.y, mPaint);//完全绘制Bitmap
 
         //绘制Bitmap的一部分，并对其拉伸
@@ -531,4 +537,104 @@ public class MyExample extends View {
         }
     }
 
+    /**
+     * 绘制路径
+     *
+     * @param canvas
+     */
+    private void drawPath(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        int padding = (int)(5*mDensity);
+
+        //画笔
+        mPaint.reset();
+        mPaint.setColor(0xff8bc5ba);//设置颜色
+        mPaint.setStrokeWidth(4);//设置线宽
+        mPaint.setStyle(Paint.Style.STROKE);//设置填充
+
+        //向Path中加入Arc
+        left = mWidth / 6 * 4 + padding;
+        top = mHeight / 6 * 1 + padding;
+        right = mWidth / 6 * 5;
+        bottom = mHeight / 6 * 2 - padding;
+        RectF arcRecF = new RectF(left, top, right, bottom);
+        mPath.addArc(arcRecF, 0, 135);
+        //向Path中加入Oval
+        left = mWidth / 6 * 5;
+        top = mHeight / 6 * 1 + padding;
+        right = mWidth / 6 * 6 - padding;
+        bottom = mHeight / 6 * 2 - padding;
+        RectF ovalRecF = new RectF(left, top, right, bottom);
+        mPath.addOval(ovalRecF, Path.Direction.CCW);
+        canvas.drawPath(mPath, mPaint);
+    }
+
+    /**
+     * 绘制贝塞尔曲线
+     *
+     * @param canvas
+     */
+    private void drawBezier(Canvas canvas)
+    {
+        float left,top,right,bottom;
+        int padding = (int)(5*mDensity);
+        Point pos = new Point(padding, mHeight / 6 * 2 + padding);
+
+        mPaint.setColor(0xff8bc5ba);//设置颜色
+        mPaint.setStrokeWidth(4);//设置线宽
+
+
+        /*-----------------使用lineTo、arcTo、quadTo、cubicTo画线--------------*/
+        mPaint.setStyle(Paint.Style.STROKE);//设置画笔为线条模式
+        canvas.translate(pos.x, pos.y);
+        Path path = new Path();
+        //用pointList记录不同的path的各处的连接点
+        List<Point> pointList = new ArrayList<Point>();
+        //1. 第一部分，绘制线段
+        path.moveTo(0, 0);
+        path.lineTo(pos.x / 2, 0);//绘制线段
+        pointList.add(new Point(0, 0));
+        pointList.add(new Point(pos.x / 2, 0));
+
+        //2. 第二部分，绘制椭圆右上角的四分之一的弧线
+        RectF arcRecF1 = new RectF(0, 0, pos.x, pos.y);
+        path.arcTo(arcRecF1, 270, 90);//绘制圆弧
+        pointList.add(new Point(pos.x, pos.y / 2));
+
+        //3. 第三部分，绘制椭圆左下角的四分之一的弧线
+        //注意，我们此处调用了path的moveTo方法，将画笔的移动到我们下一处要绘制arc的起点上
+        path.moveTo(pos.x * 1.5f, pos.y);
+        RectF arcRecF2 = new RectF(pos.x, 0, pos.x * 2, pos.y);
+        path.arcTo(arcRecF2, 90, 90);//绘制圆弧
+        pointList.add(new Point((int) (pos.x * 1.5), pos.y));
+
+        //4. 第四部分，绘制二阶贝塞尔曲线
+        //二阶贝塞尔曲线的起点就是当前画笔的位置，然后需要添加一个控制点，以及一个终点
+        //再次通过调用path的moveTo方法，移动画笔
+        path.moveTo(pos.x * 1.5f, pos.y);
+        //绘制二阶贝塞尔曲线
+        path.quadTo(pos.x * 2, 0, pos.x * 2.5f, pos.y / 2);
+        pointList.add(new Point((int) (pos.x * 2.5), pos.y / 2));
+
+        //5. 第五部分，绘制三阶贝塞尔曲线，三阶贝塞尔曲线的起点也是当前画笔的位置
+        //其需要两个控制点，即比二阶贝赛尔曲线多一个控制点，最后也需要一个终点
+        //再次通过调用path的moveTo方法，移动画笔
+        path.moveTo(pos.x * 2.5f, pos.y / 2);
+        //绘制三阶贝塞尔曲线
+        path.cubicTo(pos.x * 3, 0, pos.x * 3.5f, 0, pos.x * 4, pos.y);
+        pointList.add(new Point(pos.x * 4, pos.y));
+
+        //Path准备就绪后，真正将Path绘制到Canvas上
+        canvas.drawPath(path, mPaint);
+
+        //最后绘制Path的连接点，方便我们大家对比观察
+        mPaint.setStrokeWidth(10);//将点的strokeWidth要设置的比画path时要大
+        mPaint.setStrokeCap(Paint.Cap.ROUND);//将点设置为圆点状
+        mPaint.setColor(0xff0000ff);//设置圆点为蓝色
+        for (Point p : pointList) {
+            //遍历pointList，绘制连接点
+            canvas.drawPoint(p.x, p.y, mPaint);
+        }
+    }
 }
