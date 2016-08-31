@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.dodo.android.abook.features.animation.AnimationActivity;
+import com.dodo.android.abook.features.graphics.GraphicsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void initViews() {
+        //
         TextView canvasTv = (TextView) findViewById(R.id.tv_canvas);
         canvasTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +41,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //
+        TextView animTv = (TextView) findViewById(R.id.tv_anim);
+        animTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, AnimationActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("channelId", "1");
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+
+
 
     }
 

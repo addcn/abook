@@ -684,4 +684,27 @@ public class MyExample extends View {
             canvas.drawPoint(p.x, p.y, mPaint);
         }
     }
+
+    /**
+     * 支持wrap_content属性，就必须重写onMeasure方法
+     * @param widthMeasureSpec
+     * @param heightMeasureSpec
+     */
+    //@Override
+    protected void onMeasure2(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        if (widthSpecMode == MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(mWidth, mHeight);
+        } else if (widthSpecMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(mWidth, heightSpecSize);
+        } else if (heightSpecMode == MeasureSpec.AT_MOST) {
+            setMeasuredDimension(widthSpecSize, mHeight);
+        } else {
+            //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
 }

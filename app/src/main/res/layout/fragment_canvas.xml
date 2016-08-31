@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.dodo.android.abook.CanvasFragment">
+    tools:context=".features.graphics.CanvasFragment">
 
 
-    <com.dodo.android.abook.widget.MyView
+    <com.dodo.android.abook.widget.IQiYiLoading
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

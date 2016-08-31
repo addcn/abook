@@ -1,12 +1,13 @@
-package com.dodo.android.abook;
+package com.dodo.android.abook.features.graphics;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+
+import com.dodo.android.abook.R;
 
 public class GraphicsActivity extends AppCompatActivity {
 
