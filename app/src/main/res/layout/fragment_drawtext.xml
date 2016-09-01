@@ -33,5 +33,24 @@
         android:layout_weight="1"/>
 
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:clipChildren="false">
+
+        <com.dodo.android.abook.widget.spider.SpiderWebScoreView
+            android:id="@+id/spiderWeb_mainActivity_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+
+        <com.dodo.android.abook.widget.spider.CircularLayout
+            android:id="@+id/layout_mainActivity_circular1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:clipChildren="false"/>
+    </FrameLayout>
+
 </LinearLayout>
 
