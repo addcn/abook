@@ -168,7 +168,7 @@ public class MyExample extends View {
         String text = "中文：AaGg:1234";
 
         //6等分
-        Point pos = new Point(mWidth / 6 * 1, mHeight / 6 * 5); //写字点，y为四线格的top
+        Point p = new Point(mWidth / 6 * 1, mHeight / 6 * 5); //写字点，y为四线格的top
 
         /**
          * 内容文字
@@ -184,7 +184,7 @@ public class MyExample extends View {
 
         //计算各线位置
         Paint.FontMetricsInt fm = mPaint.getFontMetricsInt();//FontMetricsInt对象
-        int baseLineY = pos.y - fm.top;
+        int baseLineY = p.y - fm.top;
         float ascent = baseLineY + fm.ascent;
         float descent = baseLineY + fm.descent;
         float top = baseLineY + fm.top;
@@ -193,7 +193,7 @@ public class MyExample extends View {
         //画布
         canvas.save();
         canvas.translate(0, 0); //原点
-        canvas.drawText(text, pos.x, baseLineY, mPaint);
+        canvas.drawText(text, p.x, baseLineY, mPaint);
 
         /**
          * 辅助点（圆）
@@ -202,7 +202,7 @@ public class MyExample extends View {
         mPaint.setColor(Color.RED);//设置颜色
         mPaint.setStyle(Paint.Style.FILL);//设置填充
         mPaint.setStrokeWidth(5);//设置线宽
-        canvas.drawCircle(pos.x, pos.y, 8, mPaint);
+        canvas.drawCircle(p.x, p.y, 8, mPaint);
 
         /**
          * 四格线
@@ -213,23 +213,23 @@ public class MyExample extends View {
 
         //画基线
         mPaint.setColor(Color.RED);//设置颜色
-        canvas.drawLine(pos.x, baseLineY, mWidth, baseLineY, mPaint);
+        canvas.drawLine(p.x, baseLineY, mWidth, baseLineY, mPaint);
 
         //画top
         mPaint.setColor(Color.BLUE);//设置颜色
-        canvas.drawLine(pos.x, top, mWidth, top, mPaint);
+        canvas.drawLine(p.x, top, mWidth, top, mPaint);
 
         //画ascent
         mPaint.setColor(0xff0c76c0);//设置颜色
-        canvas.drawLine(pos.x, ascent, mWidth, ascent, mPaint);
+        canvas.drawLine(p.x, ascent, mWidth, ascent, mPaint);
 
         //画descent
         mPaint.setColor(0xfffd8403);//设置颜色
-        canvas.drawLine(pos.x, descent, mWidth, descent, mPaint);
+        canvas.drawLine(p.x, descent, mWidth, descent, mPaint);
 
         //画bottom
         mPaint.setColor(0xff007f57);//设置颜色
-        canvas.drawLine(pos.x, bottom, mWidth, bottom, mPaint);
+        canvas.drawLine(p.x, bottom, mWidth, bottom, mPaint);
 
         canvas.restore();
     }
@@ -255,13 +255,13 @@ public class MyExample extends View {
 
         //先创建两个相同的圆形路径，并先画出两个路径原图
         Path circlePath = new Path();
-        Point pos = new Point(mWidth / 6 * 2, mHeight / 6 * 5 - mHeight / 6 * 1 / 2);
-        circlePath.addCircle(pos.x, pos.y, 120, Path.Direction.CCW);//逆向绘制
+        Point p = new Point(mWidth / 6 * 2, mHeight / 6 * 5 - mHeight / 6 * 1 / 2);
+        circlePath.addCircle(p.x, p.y, 120, Path.Direction.CCW);//逆向绘制
         canvas.drawPath(circlePath, mPaint);//绘制出路径原形
 
         Path circlePath2 = new Path();
-        Point pos2 = new Point(mWidth / 6 * 4, mHeight / 6 * 5 - mHeight / 6 * 1 / 2);
-        circlePath2.addCircle(pos2.x, pos2.y, 120, Path.Direction.CCW);
+        Point p2 = new Point(mWidth / 6 * 4, mHeight / 6 * 5 - mHeight / 6 * 1 / 2);
+        circlePath2.addCircle(p2.x, p2.y, 120, Path.Direction.CCW);
         canvas.drawPath(circlePath2, mPaint);//绘制出路径原形
 
         //辅助点（圆）
@@ -269,7 +269,7 @@ public class MyExample extends View {
         mPaint.setColor(Color.RED);//设置颜色
         mPaint.setStyle(Paint.Style.FILL);//设置填充
         mPaint.setStrokeWidth(5);//设置线宽
-        canvas.drawCircle(pos2.x, pos2.y, 3, mPaint);
+        canvas.drawCircle(p2.x, p2.y, 3, mPaint);
 
         //画笔
         mPaint.reset();
@@ -286,7 +286,7 @@ public class MyExample extends View {
         mPaint.setColor(Color.RED);//设置颜色
         mPaint.setStyle(Paint.Style.FILL);//设置填充
         mPaint.setStrokeWidth(5);//设置线宽
-        canvas.drawCircle(pos.x, pos.y, 3, mPaint);
+        canvas.drawCircle(p.x, p.y, 3, mPaint);
 
         canvas.restore();
     }
@@ -315,7 +315,7 @@ public class MyExample extends View {
      */
     private void drawPoint(Canvas canvas) {
         //1/18
-        Point pos = new Point(mWidth / 18 * 1 + mWidth / 18 * 1 / 2, mHeight / 18 * 1);
+        Point p = new Point(mWidth / 18 * 1 + mWidth / 18 * 1 / 2, mHeight / 18 * 1);
 
         //画笔
         mPaint.reset();
@@ -326,7 +326,7 @@ public class MyExample extends View {
         //画布
         canvas.save();
         canvas.translate(0, 0); //原点
-        canvas.drawPoint(pos.x, pos.y, mPaint);
+        canvas.drawPoint(p.x, p.y, mPaint);
         canvas.restore();
     }
 
@@ -345,24 +345,24 @@ public class MyExample extends View {
          * 线段1
          */
         int padding = (int) (5 * mDensity);
-        Point pos = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 1);
-        Point pos1 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 1);
+        Point p = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 1);
+        Point p1 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 1);
 
         //画布
         canvas.save();
         canvas.translate(0, 0);
-        canvas.drawLine(pos.x, pos.y, pos1.x, pos1.y, mPaint);//直线
+        canvas.drawLine(p.x, p.y, p1.x, p1.y, mPaint);//直线
 
         /**
          * 线段2
          */
         mPaint.setColor(Color.RED);//设置颜色
-        Point pos11 = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 2);
-        Point pos12 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 2);
-        Point pos13 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1 / 2, mHeight / 18 * 1 + padding);
-        Point pos14 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1 / 2, mHeight / 18 * 3 - padding);
+        Point p11 = new Point(mWidth / 18 * 3 + padding, mHeight / 18 * 2);
+        Point p12 = new Point(mWidth / 18 * 6 - padding, mHeight / 18 * 2);
+        Point p13 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1 / 2, mHeight / 18 * 1 + padding);
+        Point p14 = new Point(mWidth / 18 * 4 + mWidth / 18 * 1 / 2, mHeight / 18 * 3 - padding);
 
-        float[] pts = {pos11.x, pos11.y, pos12.x, pos12.y, pos13.x, pos13.y, pos14.x, pos14.y}; //两两连成一条直线
+        float[] pts = {p11.x, p11.y, p12.x, p12.y, p13.x, p13.y, p14.x, p14.y}; //两两连成一条直线
         canvas.drawLines(pts, mPaint);//折线
         canvas.restore();
     }
@@ -376,7 +376,7 @@ public class MyExample extends View {
         /**
          * 圆1
          */
-        Point pos = new Point(mWidth / 18 * 7 + mWidth / 18 * 1 / 2, mHeight / 18 * 1);
+        Point p = new Point(mWidth / 18 * 7 + mWidth / 18 * 1 / 2, mHeight / 18 * 1);
 
         //画笔
         mPaint.reset();
@@ -386,30 +386,30 @@ public class MyExample extends View {
 
         //画布
         canvas.save();
-        canvas.drawCircle(pos.x, pos.y, 30, mPaint);
+        canvas.drawCircle(p.x, p.y, 30, mPaint);
 
         //辅助点（圆）
         mPaint.reset();
         mPaint.setColor(Color.RED);//设置颜色
         mPaint.setStyle(Paint.Style.FILL);//设置填充
         mPaint.setStrokeWidth(5);//设置线宽
-        canvas.drawCircle(pos.x, pos.y, 3, mPaint);
+        canvas.drawCircle(p.x, p.y, 3, mPaint);
 
         /**
          * 圆2
          */
-        Point pos1 = new Point(mWidth / 18 * 7 + mWidth / 18 * 1 / 2, mHeight / 18 * 2);
+        Point p1 = new Point(mWidth / 18 * 7 + mWidth / 18 * 1 / 2, mHeight / 18 * 2);
 
         mPaint.setColor(Color.GRAY);//设置颜色
         mPaint.setStyle(Paint.Style.STROKE);//设置填充
-        canvas.drawCircle(pos1.x, pos1.y, 70, mPaint);
+        canvas.drawCircle(p1.x, p1.y, 70, mPaint);
 
         //辅助点（圆）
         mPaint.reset();
         mPaint.setColor(Color.RED);//设置颜色
         mPaint.setStyle(Paint.Style.FILL);//设置填充
         mPaint.setStrokeWidth(5);//设置线宽
-        canvas.drawCircle(pos1.x, pos1.y, 3, mPaint);
+        canvas.drawCircle(p1.x, p1.y, 3, mPaint);
 
         canvas.restore();
     }
@@ -555,11 +555,11 @@ public class MyExample extends View {
         float left, top, right, bottom;
         int padding = (int) (5 * mDensity);
 
-        Point pos = new Point(mWidth / 6 * 2 + padding, mHeight / 6 * 1 + padding);
+        Point p = new Point(mWidth / 6 * 2 + padding, mHeight / 6 * 1 + padding);
 
         //bitmap
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        canvas.drawBitmap(bitmap, pos.x, pos.y, mPaint);//完全绘制Bitmap
+        canvas.drawBitmap(bitmap, p.x, p.y, mPaint);//完全绘制Bitmap
 
         //绘制Bitmap的一部分，并对其拉伸
         //srcRect定义了要绘制Bitmap的哪一部分
@@ -626,7 +626,7 @@ public class MyExample extends View {
     private void drawBezier(Canvas canvas) {
         float left, top, right, bottom;
         int padding = (int) (5 * mDensity);
-        Point pos = new Point(padding, mHeight / 6 * 2 + padding);
+        Point p = new Point(padding, mHeight / 6 * 2 + padding);
 
         mPaint.setColor(0xff8bc5ba);//设置颜色
         mPaint.setStrokeWidth(4);//设置线宽
@@ -634,43 +634,43 @@ public class MyExample extends View {
 
         /*-----------------使用lineTo、arcTo、quadTo、cubicTo画线--------------*/
         mPaint.setStyle(Paint.Style.STROKE);//设置画笔为线条模式
-        canvas.translate(pos.x, pos.y);
+        canvas.translate(p.x, p.y);
         Path path = new Path();
         //用pointList记录不同的path的各处的连接点
         List<Point> pointList = new ArrayList<Point>();
         //1. 第一部分，绘制线段
         path.moveTo(0, 0);
-        path.lineTo(pos.x / 2, 0);//绘制线段
+        path.lineTo(p.x / 2, 0);//绘制线段
         pointList.add(new Point(0, 0));
-        pointList.add(new Point(pos.x / 2, 0));
+        pointList.add(new Point(p.x / 2, 0));
 
         //2. 第二部分，绘制椭圆右上角的四分之一的弧线
-        RectF arcRecF1 = new RectF(0, 0, pos.x, pos.y);
+        RectF arcRecF1 = new RectF(0, 0, p.x, p.y);
         path.arcTo(arcRecF1, 270, 90);//绘制圆弧
-        pointList.add(new Point(pos.x, pos.y / 2));
+        pointList.add(new Point(p.x, p.y / 2));
 
         //3. 第三部分，绘制椭圆左下角的四分之一的弧线
         //注意，我们此处调用了path的moveTo方法，将画笔的移动到我们下一处要绘制arc的起点上
-        path.moveTo(pos.x * 1.5f, pos.y);
-        RectF arcRecF2 = new RectF(pos.x, 0, pos.x * 2, pos.y);
+        path.moveTo(p.x * 1.5f, p.y);
+        RectF arcRecF2 = new RectF(p.x, 0, p.x * 2, p.y);
         path.arcTo(arcRecF2, 90, 90);//绘制圆弧
-        pointList.add(new Point((int) (pos.x * 1.5), pos.y));
+        pointList.add(new Point((int) (p.x * 1.5), p.y));
 
         //4. 第四部分，绘制二阶贝塞尔曲线
         //二阶贝塞尔曲线的起点就是当前画笔的位置，然后需要添加一个控制点，以及一个终点
         //再次通过调用path的moveTo方法，移动画笔
-        path.moveTo(pos.x * 1.5f, pos.y);
+        path.moveTo(p.x * 1.5f, p.y);
         //绘制二阶贝塞尔曲线
-        path.quadTo(pos.x * 2, 0, pos.x * 2.5f, pos.y / 2);
-        pointList.add(new Point((int) (pos.x * 2.5), pos.y / 2));
+        path.quadTo(p.x * 2, 0, p.x * 2.5f, p.y / 2);
+        pointList.add(new Point((int) (p.x * 2.5), p.y / 2));
 
         //5. 第五部分，绘制三阶贝塞尔曲线，三阶贝塞尔曲线的起点也是当前画笔的位置
         //其需要两个控制点，即比二阶贝赛尔曲线多一个控制点，最后也需要一个终点
         //再次通过调用path的moveTo方法，移动画笔
-        path.moveTo(pos.x * 2.5f, pos.y / 2);
+        path.moveTo(p.x * 2.5f, p.y / 2);
         //绘制三阶贝塞尔曲线
-        path.cubicTo(pos.x * 3, 0, pos.x * 3.5f, 0, pos.x * 4, pos.y);
-        pointList.add(new Point(pos.x * 4, pos.y));
+        path.cubicTo(p.x * 3, 0, p.x * 3.5f, 0, p.x * 4, p.y);
+        pointList.add(new Point(p.x * 4, p.y));
 
         //Path准备就绪后，真正将Path绘制到Canvas上
         canvas.drawPath(path, mPaint);
@@ -679,14 +679,15 @@ public class MyExample extends View {
         mPaint.setStrokeWidth(10);//将点的strokeWidth要设置的比画path时要大
         mPaint.setStrokeCap(Paint.Cap.ROUND);//将点设置为圆点状
         mPaint.setColor(0xff0000ff);//设置圆点为蓝色
-        for (Point p : pointList) {
+        for (Point point : pointList) {
             //遍历pointList，绘制连接点
-            canvas.drawPoint(p.x, p.y, mPaint);
+            canvas.drawPoint(point.x, point.y, mPaint);
         }
     }
 
     /**
      * 支持wrap_content属性，就必须重写onMeasure方法
+     *
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
