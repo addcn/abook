@@ -61,13 +61,13 @@ public class DrawTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         content = inflater.inflate(R.layout.fragment_drawtext, container, false);
-        initViews();
+        //initViews();
         return content;
     }
 
     private void initViews() {
         //setContentView(mView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        myView = (MyPathMeasure) content.findViewById(R.id.myView);
+        //myView = (MyPathMeasure) content.findViewById(R.id.myView);
         mHandler.sendEmptyMessage(START_ANIM);
     }
 }

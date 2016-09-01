@@ -8,10 +8,29 @@
     tools:context=".features.graphics.DrawTextFragment">
 
 
-    <com.dodo.android.abook.widget.MyPathMeasure
+    <com.dodo.android.abook.widget.ClockView
         android:id="@+id/myView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <com.dodo.android.abook.widget.DoughnutProgress
+        android:id="@+id/myView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <com.dodo.android.abook.widget.IQiYiLoading
+        android:id="@+id/myView3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <com.dodo.android.abook.widget.MyPathMeasure
+        android:id="@+id/myView4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>

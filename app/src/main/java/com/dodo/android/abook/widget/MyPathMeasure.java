@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -86,6 +87,10 @@ public class MyPathMeasure extends View {
 
         mPathMeasure = new PathMeasure(mPath, true);
         mCurrentPosition = new float[2];
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            setLayerType(View.LAYER_TYPE_SOFTWARE, null); //关闭硬件加速
+        }
     }
 
     @Override
@@ -101,7 +106,7 @@ public class MyPathMeasure extends View {
         // 绘制对应目标
         canvas.drawCircle(mCurrentPosition[0], mCurrentPosition[1], 10, mPaint);
 
-       // startPathAnim(2000);
+       startPathAnim(2000);
     }
 
     // 开启路径动画
