@@ -692,7 +692,7 @@ public class MyExample extends View {
      * @param heightMeasureSpec
      */
     //@Override
-    protected void onMeasure2(int widthMeasureSpec, int heightMeasureSpec) {
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -705,7 +705,15 @@ public class MyExample extends View {
         } else if (heightSpecMode == MeasureSpec.AT_MOST) {
             setMeasuredDimension(widthSpecSize, mHeight);
         } else {
-            //super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        mWidth = w - getPaddingLeft() - getPaddingRight();
+        mHeight = h - getPaddingTop() - getPaddingBottom();
+        //initPath();
     }
 }

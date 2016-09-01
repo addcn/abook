@@ -8,7 +8,8 @@
     tools:context=".features.graphics.DrawTextFragment">
 
 
-    <com.dodo.android.abook.widget.MyDrawText
+    <com.dodo.android.abook.widget.MyPathMeasure
+        android:id="@+id/myView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
