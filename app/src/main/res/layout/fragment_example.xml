@@ -8,7 +8,7 @@
     tools:context=".features.graphics.CanvasFragment">
 
 
-    <com.dodo.android.abook.widget.MyExample
+    <com.dodo.android.abook.widget.MyGraphics
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
