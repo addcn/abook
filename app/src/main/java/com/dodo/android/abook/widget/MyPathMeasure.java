@@ -1,4 +1,3 @@
-
 package com.dodo.android.abook.widget;
 
 import android.animation.ValueAnimator;

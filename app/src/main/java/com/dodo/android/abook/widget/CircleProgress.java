@@ -1,8 +1,5 @@
 package com.dodo.android.abook.widget;
 
-/**
- * Created by 10113 on 2016/9/1.
- */
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,10 +12,10 @@ import android.view.View;
 /**
  * Android自定义View之酷炫吊炸天的圆环（二）
  * http://www.jianshu.com/p/6c5e4dce11aa#
- *
+ * <p/>
  * Created by binshenchen on 15/12/27.
  */
-public class DoughnutProgress extends View {
+public class CircleProgress extends View {
     private static final int DEFAULT_MIN_WIDTH = 400; //View默认最小宽度
     private static final int RED = 230, GREEN = 85, BLUE = 35; //基础颜色，这里是橙红色
     private static final int MIN_ALPHA = 30; //最小不透明度
@@ -42,10 +39,10 @@ public class DoughnutProgress extends View {
     private float firstWaveRaduis;
     private float secondWaveRaduis;
 
-    private Thread thread = new Thread(){
+    private Thread thread = new Thread() {
         @Override
         public void run() {
-            while(true){
+            while (true) {
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
@@ -56,29 +53,29 @@ public class DoughnutProgress extends View {
         }
     };
 
-    public DoughnutProgress(Context context) {
+    public CircleProgress(Context context) {
         super(context);
         init();
     }
 
-    public DoughnutProgress(Context context, AttributeSet attrs) {
+    public CircleProgress(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public DoughnutProgress(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CircleProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    private void init(){
+    private void init() {
         thread.start();
     }
 
     private void resetParams() {
         width = getWidth();
         height = getHeight();
-        raduis = Math.min(width, height)/2;
+        raduis = Math.min(width, height) / 2;
     }
 
     private void initPaint() {
@@ -95,9 +92,9 @@ public class DoughnutProgress extends View {
 
         //转起来
         canvas.rotate(-currentAngle, 0, 0);
-        if (currentAngle >= 360f){
+        if (currentAngle >= 360f) {
             currentAngle = currentAngle - 360f;
-        } else{
+        } else {
             currentAngle = currentAngle + 2f;
         }
 
@@ -122,7 +119,7 @@ public class DoughnutProgress extends View {
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(WAVE_WIDTH);
         secondWaveRaduis = calculateWaveRaduis(secondWaveRaduis);
-        firstWaveRaduis = calculateWaveRaduis(secondWaveRaduis + raduis*(MIDDLE_WAVE_RADUIS_PERCENT - doughnutRaduisPercent) - raduis*doughnutWidthPercent/2);
+        firstWaveRaduis = calculateWaveRaduis(secondWaveRaduis + raduis * (MIDDLE_WAVE_RADUIS_PERCENT - doughnutRaduisPercent) - raduis * doughnutWidthPercent / 2);
         paint.setColor(Color.argb(calculateWaveAlpha(secondWaveRaduis), RED, GREEN, BLUE));
         canvas.drawCircle(0, 0, secondWaveRaduis, paint); //画第二个圆（初始半径较小的）
 
@@ -135,15 +132,16 @@ public class DoughnutProgress extends View {
 
     /**
      * 计算波纹圆的半径
+     *
      * @param waveRaduis
      * @return
      */
-    private float calculateWaveRaduis(float waveRaduis){
-        if(waveRaduis < raduis*doughnutRaduisPercent + raduis*doughnutWidthPercent/2){
-            waveRaduis = raduis*doughnutRaduisPercent + raduis*doughnutWidthPercent/2;
+    private float calculateWaveRaduis(float waveRaduis) {
+        if (waveRaduis < raduis * doughnutRaduisPercent + raduis * doughnutWidthPercent / 2) {
+            waveRaduis = raduis * doughnutRaduisPercent + raduis * doughnutWidthPercent / 2;
         }
-        if(waveRaduis > raduis*MIDDLE_WAVE_RADUIS_PERCENT + raduis*(MIDDLE_WAVE_RADUIS_PERCENT - doughnutRaduisPercent) - raduis*doughnutWidthPercent/2){
-            waveRaduis = waveRaduis - (raduis*MIDDLE_WAVE_RADUIS_PERCENT + raduis*(MIDDLE_WAVE_RADUIS_PERCENT - doughnutRaduisPercent) - raduis*doughnutWidthPercent/2) + raduis*doughnutWidthPercent/2 + raduis*doughnutRaduisPercent;
+        if (waveRaduis > raduis * MIDDLE_WAVE_RADUIS_PERCENT + raduis * (MIDDLE_WAVE_RADUIS_PERCENT - doughnutRaduisPercent) - raduis * doughnutWidthPercent / 2) {
+            waveRaduis = waveRaduis - (raduis * MIDDLE_WAVE_RADUIS_PERCENT + raduis * (MIDDLE_WAVE_RADUIS_PERCENT - doughnutRaduisPercent) - raduis * doughnutWidthPercent / 2) + raduis * doughnutWidthPercent / 2 + raduis * doughnutRaduisPercent;
         }
         waveRaduis += 0.6f;
         return waveRaduis;
@@ -151,15 +149,16 @@ public class DoughnutProgress extends View {
 
     /**
      * 根据波纹圆的半径计算不透明度
+     *
      * @param waveRaduis
      * @return
      */
-    private int calculateWaveAlpha(float waveRaduis){
-        float percent = (waveRaduis-raduis*doughnutRaduisPercent-raduis*doughnutWidthPercent/2)/(raduis-raduis*doughnutRaduisPercent-raduis*doughnutWidthPercent/2);
-        if(percent >= 1f){
+    private int calculateWaveAlpha(float waveRaduis) {
+        float percent = (waveRaduis - raduis * doughnutRaduisPercent - raduis * doughnutWidthPercent / 2) / (raduis - raduis * doughnutRaduisPercent - raduis * doughnutWidthPercent / 2);
+        if (percent >= 1f) {
             return 0;
-        }else{
-            return (int) (MIN_ALPHA*(1f-percent));
+        } else {
+            return (int) (MIN_ALPHA * (1f - percent));
         }
     }
 
