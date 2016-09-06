@@ -40,6 +40,8 @@ public class MyView extends View {
     public MyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
+
+       // int dy = Math.abs(CIRCLEY - startY);
     }
 
 
