@@ -10,9 +10,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dodo.android.abook.features.animation.AnimationActivity;
+import com.dodo.android.abook.features.events.EventActivity;
 import com.dodo.android.abook.features.graphics.GraphicsActivity;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView canvasTv, animTv, eventTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void initViews() {
         //
-        TextView canvasTv = (TextView) findViewById(R.id.tv_canvas);
+        canvasTv = (TextView) findViewById(R.id.tv_canvas);
         canvasTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("channelId", "1");
                 intent.putExtras(bundle);
                 startActivity(intent);
+                //
+                hghlightSel(v);
             }
         });
         //
-        TextView animTv = (TextView) findViewById(R.id.tv_anim);
+        animTv = (TextView) findViewById(R.id.tv_anim);
         animTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,12 +57,35 @@ public class MainActivity extends AppCompatActivity {
                 bundle.putString("channelId", "1");
                 intent.putExtras(bundle);
                 startActivity(intent);
+                //
+                hghlightSel(v);
+            }
+        });
+        //
+        eventTv = (TextView) findViewById(R.id.tv_event);
+        eventTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, EventActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("channelId", "1");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                //
+                hghlightSel(v);
             }
         });
 
 
+    }
 
+    private void hghlightSel(View view) {
+        canvasTv.setBackgroundColor(0xffdddddd);
+        animTv.setBackgroundColor(0xffdddddd);
+        eventTv.setBackgroundColor(0xffdddddd);
 
+        ((TextView) view).setBackgroundColor(0xffffffff);
     }
 
     @Override
