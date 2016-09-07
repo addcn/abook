@@ -1,4 +1,4 @@
-package com.dodo.android.abook.util;
+package com.dodo.android.abook.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;

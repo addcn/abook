@@ -13,6 +13,13 @@ import com.dodo.android.abook.features.animation.AnimationActivity;
 import com.dodo.android.abook.features.events.EventActivity;
 import com.dodo.android.abook.features.graphics.GraphicsActivity;
 
+/**
+ * 项目主页
+ *
+ * @author <a href="mailto:lhuibo@gmail.com">dodo</a> 2016-09-07
+ * @version ${Id}
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView canvasTv, animTv, eventTv;
@@ -30,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         initViews();
     }
 
+    /**
+     * 初始視圖
+     */
     public void initViews() {
         //
         canvasTv = (TextView) findViewById(R.id.tv_canvas);
@@ -76,8 +86,6 @@ public class MainActivity extends AppCompatActivity {
                 hghlightSel(v);
             }
         });
-
-
     }
 
     private void hghlightSel(View view) {

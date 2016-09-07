@@ -4,18 +4,27 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.dodo.android.abook.R;
 
+/**
+ * Android自定义视图
+ *
+ * @author <a href="mailto:lhuibo@gmail.com">dodo</a> 2016-09-07
+ * @version ${Id}
+ */
 public class GraphicsActivity extends AppCompatActivity {
 
     private DrawTextFragment drawTextFragment;
     private CanvasFragment canvasFragment;
     private ExampleFragment exampleFragment;
 
-    TextView canvasTv, drawTextTv, exampleTv;
+    private TextView canvasTv, drawTextTv, exampleTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,7 @@ public class GraphicsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_graphics);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Create the fragment
         exampleFragment = (ExampleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
@@ -84,6 +94,7 @@ public class GraphicsActivity extends AppCompatActivity {
                 //transaction.add(R.id.fragment,drawTextFragment);
                 transaction.replace(R.id.fragment, exampleFragment);
                 transaction.commit();
+
                 //
                 hghlightSel(v);
             }
@@ -97,5 +108,23 @@ public class GraphicsActivity extends AppCompatActivity {
         exampleTv.setBackgroundColor(0xffdddddd);
 
         ((TextView) view).setBackgroundColor(0xffffffff);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        return true;
     }
 }

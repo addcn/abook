@@ -16,6 +16,15 @@ public class ExampleFragment extends Fragment {
     public ExampleFragment() {
     }
 
+    public static ExampleFragment newInstance() {
+        ExampleFragment fragment = new ExampleFragment();
+        Bundle bundle = new Bundle();
+        //bundle.putString("listId", listId);
+        //bundle.putString("indexId", indexId);
+        //fragment.setArguments(bundle);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
