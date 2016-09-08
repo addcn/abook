@@ -32,6 +32,11 @@
             android:label="@string/title_activity_event"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".features.interfaces.InterfacesActivity"
+            android:label="@string/title_activity_interfaces"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

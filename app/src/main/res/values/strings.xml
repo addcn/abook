@@ -7,4 +7,5 @@
     <string name="title_activity_graphics">GraphicsActivity</string>
     <string name="title_activity_animation">AnimationActivity</string>
     <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_interfaces">InterfacesActivity</string>
 </resources>

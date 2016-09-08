@@ -17,4 +17,32 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+
+
+
+    <style name="p_right_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+        <item name="android:textColorHint">#ffcccccc</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center|right</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginBottom">3.0dip</item>
+        <!-- <item name="android:layout_marginLeft">8.0dip</item> -->
+        <!-- <item name="android:paddingLeft">@dimen/post_title_min_width</item>*****统一宽度***** -->
+    </style>
+    <style name="p_right_text_right_style" parent="@style/p_right_text_style">
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="p_right_text_fill_style" parent="@style/p_right_text_style">
+        <item name="android:textColor">#ff868686</item>
+        <item name="android:textColorHint">#ffcccccc</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+
 </resources>

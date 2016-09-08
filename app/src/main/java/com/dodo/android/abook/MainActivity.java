@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.dodo.android.abook.features.animation.AnimationActivity;
 import com.dodo.android.abook.features.events.EventActivity;
 import com.dodo.android.abook.features.graphics.GraphicsActivity;
+import com.dodo.android.abook.features.interfaces.InterfacesActivity;
 
 /**
  * 项目主页
@@ -22,7 +23,7 @@ import com.dodo.android.abook.features.graphics.GraphicsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView canvasTv, animTv, eventTv;
+    private TextView tab1, tab2,tab3,tab4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void initViews() {
         //
-        canvasTv = (TextView) findViewById(R.id.tv_canvas);
-        canvasTv.setOnClickListener(new View.OnClickListener() {
+        tab1 = (TextView) findViewById(R.id.tab1);
+        tab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -57,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //
-        animTv = (TextView) findViewById(R.id.tv_anim);
-        animTv.setOnClickListener(new View.OnClickListener() {
+        tab2 = (TextView) findViewById(R.id.tab2);
+        tab2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -72,8 +73,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //
-        eventTv = (TextView) findViewById(R.id.tv_event);
-        eventTv.setOnClickListener(new View.OnClickListener() {
+        tab3 = (TextView) findViewById(R.id.tab3);
+        tab3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, InterfacesActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("channelId", "1");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                //
+                hghlightSel(v);
+            }
+        });
+        //
+        tab4 = (TextView) findViewById(R.id.tab4);
+        tab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -89,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hghlightSel(View view) {
-        canvasTv.setBackgroundColor(0xffdddddd);
-        animTv.setBackgroundColor(0xffdddddd);
-        eventTv.setBackgroundColor(0xffdddddd);
+        tab1.setBackgroundColor(0xffdddddd);
+        tab2.setBackgroundColor(0xffdddddd);
+        tab3.setBackgroundColor(0xffdddddd);
+        tab4.setBackgroundColor(0xffdddddd);
 
         ((TextView) view).setBackgroundColor(0xffffffff);
     }
