@@ -13,6 +13,8 @@ import com.dodo.android.abook.features.animation.AnimationActivity;
 import com.dodo.android.abook.features.events.EventActivity;
 import com.dodo.android.abook.features.graphics.GraphicsActivity;
 import com.dodo.android.abook.features.interfaces.InterfacesActivity;
+import com.dodo.android.abook.widget.CirclePoint;
+import com.dodo.android.abook.widget.TelescopicView;
 
 /**
  * 项目主页
@@ -29,13 +31,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(new MyView(this));
+        //setContentView(new TelescopicView(this));
         setContentView(R.layout.activity_main);
+
+        TelescopicView telescopicView = (TelescopicView) findViewById(R.id.telescopicView);
+        telescopicView.setDuration(10);
+        telescopicView.startAnimation();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        initViews();
+        //initViews();
     }
 
     /**

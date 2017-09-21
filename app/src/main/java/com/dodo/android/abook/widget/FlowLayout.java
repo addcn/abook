@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 自动换行视图
+ * 自定义视图ViewGroup  自动换行视图
  *
  * @author <a href="mailto:lhuibo@gmail.com">dodo</a> 2016-09-07
  * @version ${Id}

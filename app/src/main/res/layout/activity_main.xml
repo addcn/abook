@@ -81,6 +81,7 @@
 
         </LinearLayout>
 
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,6 +89,20 @@
             android:gravity="center"
             android:text="主页内容"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <com.dodo.android.abook.widget.MyView
+            android:id="@+id/myView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"/>
+
+        <com.dodo.android.abook.widget.TelescopicView
+            android:id="@+id/telescopicView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"/>
 
     </LinearLayout>
 
