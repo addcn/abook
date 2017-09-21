@@ -23,7 +23,7 @@ import com.dodo.android.abook.features.graphics.ExampleFragment;
 
 public class AnimationActivity extends AppCompatActivity {
 
-    private AnimationFragment animationFragment;
+    private WindmillFragment animationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +34,10 @@ public class AnimationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Create the fragment
-        animationFragment = (AnimationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+        animationFragment = (WindmillFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
         if (animationFragment == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            animationFragment = new AnimationFragment();
+            animationFragment = new WindmillFragment();
             transaction.add(R.id.fragment, animationFragment);
             transaction.commit();
         }

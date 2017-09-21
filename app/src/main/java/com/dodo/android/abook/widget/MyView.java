@@ -121,8 +121,9 @@ public class MyView extends View {
     }
 
     /**
-     * 自定义View会在这个阶段获取其自身的大小。
-     * 如果想要支持wrap_content属性，就必须重写onMeasure方法，如下所示（可以当做模板代码）。需要做的就是设置setMeasuredDimension(int width, int height)
+     * 测量自定义控件的长宽
+     * 需要做的就是设置setMeasuredDimension(int width, int height)。
+     * 如果想要支持wrap_content属性，就必须重写onMeasure方法，如下所示（可以当做模板代码）。
      *
      * @param widthMeasureSpec
      * @param heightMeasureSpec
