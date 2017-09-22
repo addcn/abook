@@ -8,12 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dodo.android.abook.features.animation.AnimationActivity;
 import com.dodo.android.abook.features.events.EventActivity;
 import com.dodo.android.abook.features.graphics.GraphicsActivity;
 import com.dodo.android.abook.features.interfaces.InterfacesActivity;
 import com.dodo.android.abook.widget.CirclePoint;
+import com.dodo.android.abook.widget.MadreainLoadingView;
+import com.dodo.android.abook.widget.RightMarkView;
+import com.dodo.android.abook.widget.TaiJiView;
 import com.dodo.android.abook.widget.TelescopicView;
 
 /**
@@ -31,17 +35,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(new TelescopicView(this));
-        setContentView(R.layout.activity_main);
+        TaiJiView v = new TaiJiView(this);
+        setContentView(v);
+        //setContentView(R.layout.activity_main);
 
-        TelescopicView telescopicView = (TelescopicView) findViewById(R.id.telescopicView);
+        /*TelescopicView telescopicView = (TelescopicView) findViewById(R.id.telescopicView);
         telescopicView.setDuration(10);
         telescopicView.startAnimation();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
 
-        initViews();
+        v.setListener(new TaiJiView.TaiJiListener() {
+            @Override
+            public void onBlackClick() {
+                Toast.makeText(MainActivity.this, "黑色被点击", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onWriteClick() {
+                Toast.makeText(MainActivity.this, "白色被点击", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //initViews();
     }
 
     /**

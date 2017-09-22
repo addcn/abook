@@ -51,8 +51,7 @@ public class WindPath extends View {
         mWindPaint.setAntiAlias(true);
         mWindPaint.setColor(Color.WHITE);
 
-        mAnimation = new RotateAnimation(0,360, Animation.RELATIVE_TO_SELF,
-                0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        mAnimation = new RotateAnimation(0,360, Animation.RELATIVE_TO_SELF, 0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         mAnimation.setRepeatCount(-1); //设置为无限重复
         mAnimation.setInterpolator(new LinearInterpolator());//匀速
         mAnimation.setFillAfter(true);
