@@ -16,6 +16,7 @@ import com.dodo.android.abook.features.graphics.GraphicsActivity;
 import com.dodo.android.abook.features.interfaces.InterfacesActivity;
 import com.dodo.android.abook.widget.CirclePoint;
 import com.dodo.android.abook.widget.MadreainLoadingView;
+import com.dodo.android.abook.widget.PhotoshopBezier;
 import com.dodo.android.abook.widget.RightMarkView;
 import com.dodo.android.abook.widget.TaiJiView;
 import com.dodo.android.abook.widget.TelescopicView;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        TaiJiView v = new TaiJiView(this);
+        PhotoshopBezier v = new PhotoshopBezier(this);
         setContentView(v);
         //setContentView(R.layout.activity_main);
 
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
 
-        v.setListener(new TaiJiView.TaiJiListener() {
+       /* v.setListener(new TaiJiView.TaiJiListener() {
             @Override
             public void onBlackClick() {
                 Toast.makeText(MainActivity.this, "黑色被点击", Toast.LENGTH_LONG).show();
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onWriteClick() {
                 Toast.makeText(MainActivity.this, "白色被点击", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
 
         //initViews();
     }
