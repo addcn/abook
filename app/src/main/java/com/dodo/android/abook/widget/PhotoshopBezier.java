@@ -18,6 +18,7 @@ public class PhotoshopBezier extends View {
 
     protected Context context;
     protected Paint paint;
+    protected Path path;
 
     private PointF start, end, control1, control2;
 
@@ -46,6 +47,8 @@ public class PhotoshopBezier extends View {
         // context
         this.context = context;
 
+        path = new Path();
+
         paint = new Paint();
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(8);
@@ -64,7 +67,8 @@ public class PhotoshopBezier extends View {
 
         canvas.drawARGB(255, 139, 197, 186);
 
-        // 初始化数据点和控制点的位置
+        // P1-->P2
+        // 初始化
         start.x = 266;
         start.y = 80;
         end.x = 573;
@@ -77,6 +81,7 @@ public class PhotoshopBezier extends View {
         // 绘制数据点和控制点
         paint.setColor(Color.GRAY);
         paint.setStrokeWidth(20);
+
         canvas.drawPoint(start.x, start.y, paint);
         canvas.drawPoint(end.x, end.y, paint);
         canvas.drawPoint(control1.x, control1.y, paint);
@@ -85,14 +90,111 @@ public class PhotoshopBezier extends View {
         // 绘制辅助线
         paint.setStrokeWidth(4);
         canvas.drawLine(start.x, start.y, control1.x, control1.y, paint);
-        canvas.drawLine(control1.x, control1.y,control2.x, control2.y, paint);
         canvas.drawLine(control2.x, control2.y,end.x, end.y, paint);
 
         // 绘制贝塞尔曲线
         paint.setColor(Color.RED);
         paint.setStrokeWidth(8);
 
-        Path path = new Path();
+        path.moveTo(start.x, start.y);
+        path.cubicTo(control1.x, control1.y, control2.x,control2.y, end.x, end.y);
+
+        canvas.drawPath(path, paint);
+
+
+        // P2-->P3
+        // 初始化
+        start.x = 573;
+        start.y = 128;
+        end.x = 535;
+        end.y = 466;
+        control1.x = 644;
+        control1.y = 244;
+        control2.x = 607;
+        control2.y = 421;
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(20);
+        canvas.drawPoint(start.x, start.y, paint);
+        canvas.drawPoint(end.x, end.y, paint);
+        canvas.drawPoint(control1.x, control1.y, paint);
+        canvas.drawPoint(control2.x, control2.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(start.x, start.y, control1.x, control1.y, paint);
+        canvas.drawLine(control2.x, control2.y,end.x, end.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(8);
+
+        path.moveTo(start.x, start.y);
+        path.cubicTo(control1.x, control1.y, control2.x,control2.y, end.x, end.y);
+
+        canvas.drawPath(path, paint);
+
+        // P3-->P4
+        // 初始化
+        start.x = 535;
+        start.y = 466;
+        end.x = 147;
+        end.y = 439;
+        control1.x = 463;
+        control1.y = 508;
+        control2.x = 312;
+        control2.y = 517;
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(20);
+        canvas.drawPoint(start.x, start.y, paint);
+        canvas.drawPoint(end.x, end.y, paint);
+        canvas.drawPoint(control1.x, control1.y, paint);
+        canvas.drawPoint(control2.x, control2.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(start.x, start.y, control1.x, control1.y, paint);
+        canvas.drawLine(control2.x, control2.y,end.x, end.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(8);
+
+        path.moveTo(start.x, start.y);
+        path.cubicTo(control1.x, control1.y, control2.x,control2.y, end.x, end.y);
+
+        canvas.drawPath(path, paint);
+
+        // P4-->P1
+        // 初始化
+        start.x = 147;
+        start.y = 439;
+        end.x = 266;
+        end.y = 80;
+        control1.x = 34;
+        control1.y = 356;
+        control2.x = 12;
+        control2.y = 285;
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(20);
+        canvas.drawPoint(start.x, start.y, paint);
+        canvas.drawPoint(end.x, end.y, paint);
+        canvas.drawPoint(control1.x, control1.y, paint);
+        canvas.drawPoint(control2.x, control2.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(start.x, start.y, control1.x, control1.y, paint);
+        canvas.drawLine(control2.x, control2.y,end.x, end.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(8);
 
         path.moveTo(start.x, start.y);
         path.cubicTo(control1.x, control1.y, control2.x,control2.y, end.x, end.y);
@@ -108,7 +210,7 @@ public class PhotoshopBezier extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
+/*
         int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -124,7 +226,7 @@ public class PhotoshopBezier extends View {
             setMeasuredDimension(w, h);
         } else {
             super.onMeasure(w, h);
-        }
+        }*/
 
     }
 }
