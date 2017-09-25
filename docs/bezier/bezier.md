@@ -1,11 +1,15 @@
-# 塞尔曲线绘制Photoshop钢笔矢量图
+# Photoshop矢量图转Android自定义View
 
 
 
 ### 贝塞尔曲线
 
-贝塞尔曲线的主要优点是可以实时控制曲线状态，并可以通过改变控制点的状态实时让曲线进行平滑的状态变化。比如非棱角（圆角）曲线图。
+贝塞尔曲线(Bézier curve)，又称贝兹曲线或贝济埃曲线，是应用于二维图形应用程序的数学曲线。一般的矢量图形软件通过它来精确画出曲线，我们在绘图工具上看到的[钢笔工具](http://bezier.method.ac/)就是来做这种矢量曲线的。
 
+
+Android从API1起就支持贝塞尔曲线，实现方式是借助android.graphics.Path类。
+
+一般来说，开发者只考虑二阶贝塞尔曲线和三阶贝塞尔曲线，对于再高阶的贝塞尔曲线，通常可以将曲线拆分成多个低阶的贝塞尔曲线，也就是所谓的降阶操作。
 
 
 贝塞尔曲线 | 对应的方法 | 演示动画
@@ -14,7 +18,6 @@
 二阶贝塞尔曲线（抛物线） | ```path.cubicTo(control.x, control.y, end.x, end.y)``` | ![二阶贝塞尔曲线](http://double0291.github.io/BezierBase/bezier_anim_2.gif)
 三阶贝塞尔曲线 | ```path.cubicTo(control1.x, control1.y, control2.x,control2.y, end.x, end.y)``` | ![三阶贝塞尔曲线](https://user-gold-cdn.xitu.io/2017/8/23/bd9b5ba0ef55d80f6ed3cc395ca95112?imageView2/0/w/1280/h/960)
 
-注：对于高阶的曲线，用低阶的曲线组合也可达到相同的效果，即降阶。
 
 
 ### 使用方法

@@ -17,8 +17,14 @@ import android.view.View;
  * 1、大小比例计算适应不同尺寸
  * 2、插值器，远路径运动 http://www.jianshu.com/p/c0d7ad796cee
  * 3、动画 http://gavinliu.cn/2015/03/30/Android-Animation-%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E4%B9%8B%E7%BE%8E/
- *
+ *    http://blog.csdn.net/u013831257/article/details/51281136
+ *    http://blog.csdn.net/eclipsexys/article/details/51992473
+ *    https://stackoverflow.com/questions/44613114/points-based-curve-transformation-bezier-curve-transform-in-android
+ * 4、获取贝塞尔曲线上点的坐标
+ * http://www.jianshu.com/p/c0d7ad796cee
  */
+
+
 
 public class PhotoshopBezier extends View {
 
