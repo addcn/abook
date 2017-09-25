@@ -12,6 +12,12 @@ import android.view.View;
 
 /**
  * 塞尔曲线绘制Photoshop钢笔矢量图
+ *
+ * TODO:
+ * 1、大小比例计算适应不同尺寸
+ * 2、插值器，远路径运动 http://www.jianshu.com/p/c0d7ad796cee
+ * 3、动画 http://gavinliu.cn/2015/03/30/Android-Animation-%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E4%B9%8B%E7%BE%8E/
+ *
  */
 
 public class PhotoshopBezier extends View {
