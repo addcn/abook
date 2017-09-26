@@ -16,6 +16,7 @@ import com.dodo.android.abook.R;
 
 /**
  * https://madreain.github.io/2017/08/03/20170803/
+ * CustomSwitchView.java
  *
  * Created by wujun on 2017/8/3.
  * 仿iOS开关button

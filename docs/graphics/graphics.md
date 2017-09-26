@@ -5,10 +5,44 @@
 
 ### Canvas常用操作速查表
 
-功能 | API | 说明
----|---|---
-| 绘制颜色       | drawColor <br /> drawRGB, drawARGB             | 使用单一颜色填充整个画布|
-| 绘制基本形状     | drawPoint, drawPoints, drawLine, drawLines, drawRect, drawRoundRect, drawOval, drawCircle, drawArc | 依次为 点、线、矩形、圆角矩形、椭圆、圆、圆弧|
+功能 | API | 说明 | 图示
+---|---|---|---
+| 颜色   | `Canvas.drawColor(@ColorInt int color)` <br /> `drawRGB(int r, int g, int b)` <br /> `drawARGB(int a, int r, int g, int b)`  | 颜色填充 `drawColor(Color.parse("#88880000"); // 半透明红色`  |  ![image](https://ws3.sinaimg.cn/large/006tNc79ly1fig7rvg3dbj30cg061mxa.jpg) | 
+| 画点   | `drawPoint(float x, float y, Paint paint) ` |      |  ![image](https://ws3.sinaimg.cn/large/006tNc79ly1fig7uwrynsj303m034jr8.jpg) | 
+| 画线   | `drawLine(float startX, float startY, float stopX, float stopY, Paint paint) ` |    |  ![image](https://ws2.sinaimg.cn/large/006tNc79ly1fig7vhwyxfj306504fjra.jpg) | 
+| 画圆   | `drawCircle(float centerX, float centerY, float radius, Paint paint)`|    |  ![image](https://ws4.sinaimg.cn/large/006tNc79ly1fig7spahxyj307707djrc.jpg) | 
+| 画矩形 | `drawRect(float left, float top, float right, float bottom, Paint paint) `|    |  ![image](https://ws3.sinaimg.cn/large/006tNc79ly1fig7ulrq1sj309h04mgli.jpg) | 
+| 画椭圆 | `drawOval(float left, float top, float right, float bottom, Paint paint) `|    |  ![image](https://ws1.sinaimg.cn/large/006tNc79ly1fig7vcxlv4j30do03t74a.jpg) | 
+| 画圆角矩形 |  `drawRoundRect(float left, float top, float right, float bottom, float rx, float ry, Paint paint)`|   |  ![image](https://ws3.sinaimg.cn/large/006tNc79ly1fig7vvi7asj30e104o0sp.jpg) | 
+| 绘制弧形或扇形  | `drawArc(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, Paint paint) `|    |  ![image](https://ws2.sinaimg.cn/large/006tNc79ly1fig7w109ofj307904z3yg.jpg) | 
+| 画自定义图形    | `drawPath(Path path, Paint paint)`|    |  ![image](https://ws2.sinaimg.cn/large/006tNc79ly1fig7w6bx32j30gi05cwej.jpg) | 
+| 画文字    | `drawPath(Path path, Paint paint)`|    |  ![image](https://ws2.sinaimg.cn/large/006tNc79ly1fig7w6bx32j30gi05cwej.jpg) | 
+| 画图片    | `drawPath(Path path, Paint paint)`|    |  ![image](https://ws2.sinaimg.cn/large/006tNc79ly1fig7w6bx32j30gi05cwej.jpg) | 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+功能 | API | 说明 | 图示
+---|---|---|---
+| 绘制颜色       | drawColor <br /> drawRGB, drawARGB       | 使用单一颜色填充整个画布|
+| 绘制基本形状   | drawPoint, drawPoints, drawLine, drawLines, drawRect, drawRoundRect, drawOval, drawCircle, drawArc | 依次为 点、线、矩形、圆角矩形、椭圆、圆、圆弧|
 | 绘制图片       | drawBitmap, drawPicture                  | 绘制位图和图片 |
 | 绘制文本       | drawText,    drawPosText, drawTextOnPath | 依次为 绘制文字、绘制文字时指定每个文字位置、根据路径绘制文字|
 | 绘制路径       | drawPath                                 | 绘制路径，绘制贝塞尔曲线时也需要用到该函数 |
@@ -16,7 +50,8 @@
 | 画布剪裁       | clipPath,    clipRect                    | 设置画布的显示区域                                |
 | 画布快照       | save, restore, saveLayerXxx, restoreToCount, getSaveCount | 依次为 保存当前状态、 回滚到上一次保存的状态、 保存图层状态、 会滚到指定状态、 获取保存次数|
 | 画布变换       | translate, scale, rotate, skew           | 依次为 位移、缩放、 旋转、错切|
-| Matrix(矩阵) | getMatrix, setMatrix, concat             | 实际画布的位移，缩放等操作的都是图像矩阵Matrix，只不过Matrix比较难以理解和使用，故封装了一些常用的方法。|
+| Matrix(矩阵) | getMatrix, setMatrix, concat               | 实际画布的位移，缩放等操作的都是图像矩阵Matrix，只不过Matrix比较难以理解和使用，故封装了一些常用的方法。|
+
 
 功能 | API | 说明
 ---|---|---
@@ -75,3 +110,10 @@ Matrix常用操作速查表
 
 ### 参考资料
 - [自定义view总结](https://juejin.im/post/599d2b2e518825242238d4f6)
+- [Canvas常用操作速查表](https://github.com/GcsSloop/AndroidNote/blob/master/QuickChart/Canvas.md)
+- [http://hencoder.com/ui-1-1/](http://hencoder.com/ui-1-1/)
+
+Android 画布Canvas
+http://wuxiaolong.me/2016/08/27/Canvas/
+Android 画笔Paint
+http://wuxiaolong.me/2016/08/20/Paint/

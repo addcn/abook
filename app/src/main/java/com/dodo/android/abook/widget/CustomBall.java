@@ -21,6 +21,8 @@ import android.view.View;
  *
  * Android自定义控件3——边缘凹凸的卡劵效果View
  * http://blog.csdn.net/yissan/article/details/51429281
+ * 自定义view————卡券
+ * https://madreain.github.io/2017/08/15/20170815/
  *
  * Created by xiehui on 2016/8/10.
  */

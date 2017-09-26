@@ -21,6 +21,7 @@ import com.dodo.android.abook.widget.RightMarkView;
 import com.dodo.android.abook.widget.SwitchButton;
 import com.dodo.android.abook.widget.TaiJiView;
 import com.dodo.android.abook.widget.TelescopicView;
+import com.dodo.android.abook.widget.TomatoView;
 
 /**
  * 项目主页
@@ -40,14 +41,20 @@ public class MainActivity extends AppCompatActivity {
         PhotoshopBezier v = new PhotoshopBezier(this);
         //setContentView(v);
         setContentView(R.layout.activity_main);
-        SwitchButton btn = (SwitchButton) findViewById(R.id.btn);
+        /*SwitchButton btn = (SwitchButton) findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((SwitchButton)v).onclick();
             }
+        });*/
+        TomatoView btn = (TomatoView)findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((TomatoView)v).start();
+            }
         });
-
 
         /*TelescopicView telescopicView = (TelescopicView) findViewById(R.id.telescopicView);
         telescopicView.setDuration(10);

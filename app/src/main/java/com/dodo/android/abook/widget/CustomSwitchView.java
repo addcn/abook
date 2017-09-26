@@ -12,6 +12,8 @@ import android.view.View;
 /**
  * https://github.com/IamXiaRui/Android_Demo_View/tree/master/Android_CustomSwitch
  *
+ *  SwitchButton.java
+ *
  * @ClassName: CustomSwitchView
  * @Description:自定义控件 继承View
  * @author: iamxiarui@foxmail.com
