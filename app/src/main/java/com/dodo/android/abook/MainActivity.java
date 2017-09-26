@@ -18,6 +18,7 @@ import com.dodo.android.abook.widget.CirclePoint;
 import com.dodo.android.abook.widget.MadreainLoadingView;
 import com.dodo.android.abook.widget.PhotoshopBezier;
 import com.dodo.android.abook.widget.RightMarkView;
+import com.dodo.android.abook.widget.SwitchButton;
 import com.dodo.android.abook.widget.TaiJiView;
 import com.dodo.android.abook.widget.TelescopicView;
 
@@ -37,8 +38,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         PhotoshopBezier v = new PhotoshopBezier(this);
-        setContentView(v);
-        //setContentView(R.layout.activity_main);
+        //setContentView(v);
+        setContentView(R.layout.activity_main);
+        SwitchButton btn = (SwitchButton) findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((SwitchButton)v).onclick();
+            }
+        });
+
 
         /*TelescopicView telescopicView = (TelescopicView) findViewById(R.id.telescopicView);
         telescopicView.setDuration(10);
