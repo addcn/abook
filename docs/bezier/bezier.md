@@ -104,3 +104,8 @@ protected void onDraw(Canvas canvas) {
 - [德卡斯特里奥算法——找到Bezier曲线上的一个点](http://blog.csdn.net/venshine/article/details/51750906)
 -  通过 de Casteljau 算法绘制贝塞尔曲线，并计算它的切线，实现 1-7 阶贝塞尔曲线的形成动画。 http://blog.csdn.net/u014608640/article/details/53063800
 - [android 贝塞尔曲线的应用](http://www.jianshu.com/p/c0d7ad796cee)
+
+- [练习图1-蝙蝠侠](http://www.guokr.com/post/56597/)
+- [练习图1-蝙蝠侠](https://www.google.com.hk/search?q=%E8%9D%99%E8%9D%A0%E4%BE%A0&safe=strict&source=lnms&tbm=isch&sa=X&ved=0ahUKEwiSx5Gns8TWAhXBoJQKHZVDDPgQ_AUICigB&biw=1920&bih=1069)
+- [练习图2-卡通](http://www.qqread.com/photoshop/c192115003.html)
+- [练习图3-QQ](http://www.wodnaifen.com/doeoea.html)

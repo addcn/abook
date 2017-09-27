@@ -48,13 +48,14 @@ public class MainActivity extends AppCompatActivity {
                 ((SwitchButton)v).onclick();
             }
         });*/
-        TomatoView btn = (TomatoView)findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        /*final TomatoView btn = (TomatoView)findViewById(R.id.btn);
+        TomatoView txt = (TomatoView)findViewById(R.id.txt);
+        txt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TomatoView)v).start();
+                btn.start();
             }
-        });
+        });*/
 
         /*TelescopicView telescopicView = (TelescopicView) findViewById(R.id.telescopicView);
         telescopicView.setDuration(10);
