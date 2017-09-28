@@ -33,15 +33,21 @@ Android从API1起就支持贝塞尔曲线，实现方式是借助android.graphic
 
 
 ### 理论知识
+
+- [抛物线三切线定理 / de Casteljau算法](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/CG_Txt_3_016.htm)
+  ![iamge](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/312img/CG_Gif_3_010.gif)
+
+- [抛物线三切线定理 / de Casteljau算法](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/CG_Txt_3_016.htm)
+  ![iamge](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/312img/CG_Gif_3_010.gif)
+
+- [抛物线三切线定理 / de Casteljau算法](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/CG_Txt_3_016.htm)
+  ![iamge](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/312img/CG_Gif_3_010.gif)
+
 - [贝塞尔插值-一种非常简单的多边形平滑方法](http://blog.csdn.net/microchenhong/article/details/6316332)
   ![iamge](http://upload-images.jianshu.io/upload_images/2114436-af403f13333d5770.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 - [Bézier 求贝塞尔曲线控制点](https://github.com/OCNYang/ContourView/wiki/B%C3%A9zier-%E6%B1%82%E8%B4%9D%E5%A1%9E%E5%B0%94%E6%9B%B2%E7%BA%BF%E6%8E%A7%E5%88%B6%E7%82%B9)
   ![iamge](https://camo.githubusercontent.com/84d9821dcf5fb1163ef78e83c1c8e8c33b02393e/687474703a2f2f6f6262753672316d692e626b742e636c6f7564646e2e636f6d2f6769746875622f636f6e746f7572766965772f42657a69657230322e676966)
-
-- [抛物线三切线定理 / de Casteljau算法](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/CG_Txt_3_016.htm)
-  ![iamge](http://netclass.csu.edu.cn/NCourse/hep089/Chapter3/312img/CG_Gif_3_010.gif)
-
 
 
 ### 使用方法

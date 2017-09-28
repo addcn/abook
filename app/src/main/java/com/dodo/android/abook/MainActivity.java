@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.dodo.android.abook.features.animation.AnimationActivity;
 import com.dodo.android.abook.features.events.EventActivity;
+import com.dodo.android.abook.features.graphics.ChartLineActivity;
 import com.dodo.android.abook.features.graphics.GraphicsActivity;
 import com.dodo.android.abook.features.interfaces.InterfacesActivity;
 import com.dodo.android.abook.widget.CirclePoint;
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        //initViews();
+        initViews();
     }
 
     /**
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(MainActivity.this, GraphicsActivity.class);
+                intent.setClass(MainActivity.this, ChartLineActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("channelId", "1");
                 intent.putExtras(bundle);
