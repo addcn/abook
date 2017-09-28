@@ -485,7 +485,7 @@ public class PhotoshopBezier extends View {
      *
      * 设计师教你怎么用最偷懒的方式画贝塞尔曲线 读图模式
      * http://www.guokr.com/post/695800/
-     * 
+     *
      * https://stackoverflow.com/questions/44613114/points-based-curve-transformation-bezier-curve-transform-in-android
      *
      *
