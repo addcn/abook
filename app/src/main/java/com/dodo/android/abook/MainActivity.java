@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.dodo.android.abook.widget.CirclePoint;
 import com.dodo.android.abook.widget.MadreainLoadingView;
 import com.dodo.android.abook.widget.PhotoshopBezier;
 import com.dodo.android.abook.widget.RightMarkView;
+import com.dodo.android.abook.widget.SaleProgressView;
 import com.dodo.android.abook.widget.SwitchButton;
 import com.dodo.android.abook.widget.TaiJiView;
 import com.dodo.android.abook.widget.TelescopicView;
@@ -42,6 +44,27 @@ public class MainActivity extends AppCompatActivity {
         PhotoshopBezier v = new PhotoshopBezier(this);
         //setContentView(v);
         setContentView(R.layout.activity_main);
+
+        final SaleProgressView  saleProgressView = (SaleProgressView) findViewById(R.id.spv);
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seek);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                saleProgressView.setTotalAndCurrentCount(100,i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
         /*SwitchButton btn = (SwitchButton) findViewById(R.id.btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

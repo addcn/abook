@@ -36,4 +36,15 @@
         <attr name="animatorTime" format="integer"/>
         <attr name="padding" format="integer"/>
     </declare-styleable>
+
+    <!-- Android自定义View - 仿淘宝淘抢购进度条，SaleProgressView.java，http://www.jianshu.com/p/18240ea99f6e-->
+    <declare-styleable name="SaleProgressView">
+        <attr name="sideColor" format="color" />
+        <attr name="textColor" format="color" />
+        <attr name="sideWidth" format="dimension" />
+        <attr name="overText" format="string" />
+        <attr name="nearOverText" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="isNeedAnim" format="boolean" />
+    </declare-styleable>
 </resources>
