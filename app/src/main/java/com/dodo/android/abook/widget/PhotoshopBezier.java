@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.PointF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -85,21 +86,21 @@ public class PhotoshopBezier extends View {
         mPoints.add( new PointF(174, 439) );
     }
 
-    private PointF getNewPoint(float x, float y) {
 
-        return new PointF(x, y);
-    }
 
     /**
+     * Android手写优化-更为平滑的签名效果实现
+     * http://www.jianshu.com/p/49e7292a2911
+     *
      * 过已知三数据点求控制点坐标
      *
      * @param s1 前点，起点左边前一点坐标，注：求p0点时可以Pn点位起点
      * @param s2 起点，曲线起点坐标
      * @param s3 末点，曲线结束点坐标
      *
-     * @return 控制点A左(0)及B右(1)点坐标
+     * @return 控制点pA左(0)及pB右(1)点坐标
      */
-    private List<PointF> calculateCurveControlPoints(PointF s1, PointF s2, PointF s3) {
+    private PointF[] calculateCurveControlPoints(PointF s1, PointF s2, PointF s3) {
         float dx1 = s1.x - s2.x;
         float dy1 = s1.y - s2.y;
         float dx2 = s2.x - s3.x;
@@ -124,11 +125,48 @@ public class PhotoshopBezier extends View {
         float tx = s2.x - cmX;
         float ty = s2.y - cmY;
 
-        List<PointF> cPoints = new ArrayList<>();
-        cPoints.add(getNewPoint(m1X + tx, m1Y + ty));
-        cPoints.add(getNewPoint(m2X + tx, m2Y + ty));
+        PointF pA = new PointF(m1X + tx, m1Y + ty);
+        PointF pB = new PointF(m2X + tx, m2Y + ty);
+        return new PointF[]{pA, pB};
+    }
 
-        return cPoints;
+    /**
+     * 根据已知点获取第i个控制点的坐标
+     * param ps	已知曲线将经过的坐标点
+     * param i	第i个坐标点
+     * param a,b	可以自定义的正数
+     */
+    /**
+     * 根据多个点使用canvas贝赛尔曲线画一条平滑的曲线（javascript）
+     * https://www.zheng-hang.com/?id=43
+     *
+     * 根据已知点获取第i个控制点的坐标
+     *
+     * @return
+     */
+    protected PointF[] getCtrlPoint(Point[] ps, int i, float a, float b){
+        if( (a<0||a>1) || b<0||b>1 ){
+            a = 0.25f;
+            b = 0.25f;
+        }
+        //处理两种极端情形
+        float pAx, pAy, pBx, pBy;
+        if(i<1){
+            pAx = ps[0].x + (ps[1].x-ps[0].x)*a;
+            pAy = ps[0].y + (ps[1].y-ps[0].y)*a;
+        }else{
+            pAx = ps[i].x + (ps[i+1].x-ps[i-1].x)*a;
+            pAy = ps[i].y + (ps[i+1].y-ps[i-1].y)*a;
+        }
+        if(i>ps.length-3){
+            int last = ps.length-1;
+            pBx = ps[last].x - (ps[last].x-ps[last-1].x)*b;
+            pBy = ps[last].y - (ps[last].y-ps[last-1].y)*b;
+        }else{
+            pBx = ps[i+1].x - (ps[i+2].x-ps[i].x)*b;
+            pBy = ps[i+1].y - (ps[i+2].y-ps[i].y)*b;
+        }
+        return new PointF[]{new PointF(pAx, pAy), new PointF(pBx, pBy)};
     }
 
     @Override
@@ -136,7 +174,324 @@ public class PhotoshopBezier extends View {
         super.onDraw(canvas);
 
         canvas.drawARGB(255, 139, 197, 186);
-        
+
+        //drawByPhotoshoInfo(canvas);
+        drawByMidTranslation(canvas);
+        drawByFormulaCalcula(canvas);
+
+    }
+
+    public static List<Point[]> getPoints(int width, int hight) {
+        List<Point[]> points = new ArrayList<>(2);
+        /*Point[] pts1 = new Point[4]; // 曲线1
+        Point[] pts2 = new Point[4]; // 曲线2
+        pts1[0] = new Point(0, hight / 6);
+        pts1[1] = new Point((int) (width * 0.9), hight / 5);
+        pts1[2] = new Point(width / 2, (int) (hight * (5.0 / 6)));
+        pts1[3] = new Point(0, (int) (hight * 0.75));
+
+        pts2[0] = new Point(width / 3, 0);
+        pts2[1] = new Point(width / 2, hight / 3);
+        pts2[2] = new Point(width, (int) (hight * 0.4));
+        pts2[3] = new Point(width, 0);*/
+
+        Point[] pts = new Point[4]; // 曲线0
+        pts[0] = new Point(266, 80);
+        pts[1] = new Point(573, 128);
+        pts[2] = new Point(535, 466);
+        pts[3] = new Point(174, 439);
+        points.add(pts);
+
+        //points.add(pts1);
+        //points.add(pts2);
+        return points;
+    }
+    /**
+     *
+     * /////////// 公式计算法 绘制 ///////////
+     *
+     * 自定义 View：用贝塞尔曲线绘制酷炫轮廓背景
+     * http://www.jianshu.com/p/1fe0f8f0cdfa
+     *
+     * 想求两个点之间的控制点，你需要知道这两个点的前后点的坐标，也就是说至少需要4个点的坐标才能求两个点之间曲线的控制点。
+     * https://github.com/OCNYang/ContourView/issues/2
+     *
+     * 根据多个点使用canvas贝赛尔曲线画一条平滑的曲线(javascript)
+     * https://www.zheng-hang.com/?id=43
+     *
+
+     * @param canvas
+     */
+    private List<Point[]> mPointsList;
+    private float mSmoothness = 0.25F;
+    protected void drawByFormulaCalcula(Canvas canvas) {
+
+        mPointsList = getPoints(canvas.getWidth(), canvas.getHeight());
+
+
+        // 绘制贝塞尔曲线
+        Paint paint = new Paint();
+        paint.setColor(Color.CYAN);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(2);
+
+        int flag = 0;
+        drawcontour:
+        for (Point[] pts : mPointsList) {
+            ++flag;
+            int length = pts.length;
+            if (length < 4) {
+                continue drawcontour;
+            }
+            Path path = new Path();
+            int x_min = 0, y_min = 0, x_max = 0, y_max = 0;
+            for (int i = 0; i < length; i++) {
+                Point p_i, p_1i, p_i1, p_i2;
+                float ai_x, ai_y, bi_x, bi_y;
+
+                p_i = pts[i];
+                if (i == 0) {
+                    path.moveTo(pts[0].x, pts[0].y);
+                    x_max = x_min = pts[0].x;
+                    y_min = y_max = pts[0].y;
+                    p_1i = pts[length - 1];
+                    p_i1 = pts[i + 1];
+                    p_i2 = pts[i + 2];
+                } else if (i == length - 1) {
+                    p_1i = pts[i - 1];
+                    p_i1 = pts[0];
+                    p_i2 = pts[1];
+                } else if (i == length - 2) {
+                    p_1i = pts[i - 1];
+                    p_i1 = pts[i + 1];
+                    p_i2 = pts[0];
+                } else {
+                    p_1i = pts[i - 1];
+                    p_i1 = pts[i + 1];
+                    p_i2 = pts[i + 2];
+                }
+
+                if (p_1i == null || p_i == null || p_i1 == null || p_i2 == null) {
+                    continue drawcontour;
+                }
+
+                ai_x = p_i.x + (p_i1.x - p_1i.x) * mSmoothness;
+                ai_y = p_i.y + (p_i1.y - p_1i.y) * mSmoothness;
+
+                bi_x = p_i1.x - (p_i2.x - p_i.x) * mSmoothness;
+                bi_y = p_i1.y - (p_i2.y - p_i.y) * mSmoothness;
+
+                path.cubicTo(ai_x, ai_y, bi_x, bi_y, p_i1.x, p_i1.y);
+
+                if (pts[i].x < x_min) {
+                    x_min = pts[i].x;
+                }
+                if (pts[i].x > x_max) {
+                    x_max = pts[i].x;
+                }
+                if (pts[i].y < y_min) {
+                    y_min = pts[i].y;
+                }
+                if (pts[i].y > y_max) {
+                    y_max = pts[i].y;
+                }
+            }
+            canvas.drawPath(path, paint);
+        }
+        flag = 0;
+    }
+    /**
+     * /////////// 平移计算法 绘制 ///////////
+     *
+     * 使用贝塞尔曲线绘制多点连接曲线
+     * http://www.jianshu.com/p/55099e3a2899
+     *
+     * Android手写优化-更为平滑的签名效果实现
+     * http://www.jianshu.com/p/49e7292a2911
+     *
+     * 概述
+     * 要想得到上图的效果，需要二阶贝塞尔和三阶贝塞尔配合。具体表现为，第一段和最后一段曲线为二阶贝塞尔，中间N段都为三阶贝塞尔曲线。
+     * 思路
+     * 先根据相邻点（P1，P2, P3）计算出相邻点的中点(P4， P5)，
+     * 然后再计算相邻中点的中点(P6)。
+     * 然后将（P4，P6, P5）组成的线段平移到经过P2的直线（P8，P2，P7）上。
+     * 接着根据（P4，P6，P5，P2）的坐标计算出(P7，P8)的坐标。
+     * 最后根据P7，P8等控制点画出三阶贝塞尔曲线
+     * http://blog.csdn.net/qq_17250009/article/details/51027183
+     */
+
+    protected void drawByMidTranslation(Canvas canvas) {
+        // P2-->P3
+        PointF[] tmp = calculateCurveControlPoints(mPoints.get(0), mPoints.get(1), mPoints.get(2)); //求 P2 数据点对应的控制点--->右
+        PointF c10 = tmp[0]; // 左
+        PointF c11 = tmp[1]; // 右
+        tmp = calculateCurveControlPoints(mPoints.get(1), mPoints.get(2), mPoints.get(3)); //求 P3 数据点对应的控制点--->左
+        PointF c20 = tmp[0]; // 左
+        PointF c21 = tmp[1]; // 右
+
+        startPoint = mPoints.get(1);
+        controlPoint1 = c11;
+        controlPoint2 = c20;
+        endPoint = mPoints.get(2);
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(20);
+
+        canvas.drawPoint(startPoint.x, startPoint.y, paint);
+        canvas.drawPoint(controlPoint1.x, controlPoint1.y, paint);
+        canvas.drawPoint(controlPoint2.x, controlPoint2.y, paint);
+        canvas.drawPoint(endPoint.x, endPoint.y, paint);
+
+        canvas.drawPoint(c10.x, c10.y, paint);
+        canvas.drawPoint(c21.x, c21.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(c10.x, c10.y, c11.x, c11.y, paint);
+        canvas.drawLine(c20.x, c20.y,c21.x, c21.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(8);
+
+        path.moveTo(startPoint.x, startPoint.y);
+        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
+
+        canvas.drawPath(path, paint);
+
+
+        // P3-->P4
+        tmp = calculateCurveControlPoints(mPoints.get(1), mPoints.get(2), mPoints.get(3));//求 P3 数据点对应的控制点--->右
+        c10 = tmp[0]; // 左
+        c11 = tmp[1]; // 右
+        tmp = calculateCurveControlPoints(mPoints.get(2), mPoints.get(3), mPoints.get(0));//求 P4 数据点对应的控制点--->左
+        c20 = tmp[0]; // 左
+        c21 = tmp[1]; // 右
+
+        startPoint = mPoints.get(2);
+        controlPoint1 = c11;
+        controlPoint2 = c20;
+        endPoint = mPoints.get(3);
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(20);
+
+        canvas.drawPoint(startPoint.x, startPoint.y, paint);
+        canvas.drawPoint(controlPoint1.x, controlPoint1.y, paint);
+        canvas.drawPoint(controlPoint2.x, controlPoint2.y, paint);
+        canvas.drawPoint(endPoint.x, endPoint.y, paint);
+
+        canvas.drawPoint(c10.x, c10.y, paint);
+        canvas.drawPoint(c21.x, c21.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(c10.x, c10.y, c11.x, c11.y, paint);
+        canvas.drawLine(c20.x, c20.y,c21.x, c21.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(8);
+
+        path.moveTo(startPoint.x, startPoint.y);
+        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
+
+        canvas.drawPath(path, paint);
+
+        // P4-->P1
+        tmp = calculateCurveControlPoints(mPoints.get(2), mPoints.get(3), mPoints.get(0));//求 P4 数据点对应的控制点--->右
+        c10 = tmp[0]; // 左
+        c11 = tmp[1]; // 右
+        tmp = calculateCurveControlPoints(mPoints.get(3), mPoints.get(0), mPoints.get(1));//求 P1 数据点对应的控制点--->左
+        c20 = tmp[0]; // 左
+        c21 = tmp[1]; // 右
+
+        startPoint = mPoints.get(3);
+        controlPoint1 = c11;
+        controlPoint2 = c20;
+        endPoint = mPoints.get(0);
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(20);
+
+        canvas.drawPoint(startPoint.x, startPoint.y, paint);
+        canvas.drawPoint(controlPoint1.x, controlPoint1.y, paint);
+        canvas.drawPoint(controlPoint2.x, controlPoint2.y, paint);
+        canvas.drawPoint(endPoint.x, endPoint.y, paint);
+
+        canvas.drawPoint(c10.x, c10.y, paint);
+        canvas.drawPoint(c21.x, c21.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(c10.x, c10.y, c11.x, c11.y, paint);
+        canvas.drawLine(c20.x, c20.y,c21.x, c21.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(8);
+
+        path.moveTo(startPoint.x, startPoint.y);
+        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
+
+        canvas.drawPath(path, paint);
+
+        // P1-->P2
+        tmp = calculateCurveControlPoints(mPoints.get(3), mPoints.get(0), mPoints.get(1));//求 P1 数据点对应的控制点--->右
+        c10 = tmp[0]; // 左
+        c11 = tmp[1]; // 右
+        tmp = calculateCurveControlPoints(mPoints.get(0), mPoints.get(1), mPoints.get(2));//求 P2 数据点对应的控制点--->左
+        c20 = tmp[0]; // 左
+        c21 = tmp[1]; // 右
+
+        startPoint = mPoints.get(0);
+        controlPoint1 = c11;
+        controlPoint2 = c20;
+        endPoint = mPoints.get(1);
+
+        // 绘制数据点和控制点
+        paint.setColor(Color.YELLOW);
+        paint.setStrokeWidth(20);
+
+        canvas.drawPoint(startPoint.x, startPoint.y, paint);
+        canvas.drawPoint(controlPoint1.x, controlPoint1.y, paint);
+        canvas.drawPoint(controlPoint2.x, controlPoint2.y, paint);
+        canvas.drawPoint(endPoint.x, endPoint.y, paint);
+
+        canvas.drawPoint(c10.x, c10.y, paint);
+        canvas.drawPoint(c21.x, c21.y, paint);
+
+        // 绘制辅助线
+        paint.setStrokeWidth(4);
+        canvas.drawLine(c10.x, c10.y, c11.x, c11.y, paint);
+        canvas.drawLine(c20.x, c20.y,c21.x, c21.y, paint);
+
+        // 绘制贝塞尔曲线
+        paint.setColor(Color.BLUE);
+        paint.setStrokeWidth(8);
+
+        path.moveTo(startPoint.x, startPoint.y);
+        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
+
+        canvas.drawPath(path, paint);
+    }
+
+
+    /**
+     * /////////// Photoshop信息坐标法 绘制 ///////////
+     *
+     * 设计师教你怎么用最偷懒的方式画贝塞尔曲线 读图模式
+     * http://www.guokr.com/post/695800/
+     * 
+     * https://stackoverflow.com/questions/44613114/points-based-curve-transformation-bezier-curve-transform-in-android
+     *
+     *
+     * @param canvas
+     */
+    protected void drawByPhotoshoInfo(Canvas canvas) {
         ///*
 
         // P1-->P2
@@ -152,6 +507,7 @@ public class PhotoshopBezier extends View {
 
         // 绘制数据点和控制点
         paint.setColor(Color.GRAY);
+        //paint.setStyle(Paint.Style.FILL); //填充内部
         paint.setStrokeWidth(20);
 
         canvas.drawPoint(start.x, start.y, paint);
@@ -274,141 +630,6 @@ public class PhotoshopBezier extends View {
         canvas.drawPath(path, paint);
 
         //*/
-
-
-
-        /////////////////
-        /**
-         * 想求两个点之间的控制点，你需要知道这两个点的前后点的坐标，也就是说至少需要4个点的坐标才能求两个点之间曲线的控制点。
-         * https://github.com/OCNYang/ContourView/issues/2
-         *
-         *
-         * 使用贝塞尔曲线绘制多点连接曲线
-         * http://www.jianshu.com/p/55099e3a2899
-         *
-         * 概述
-         * 要想得到上图的效果，需要二阶贝塞尔和三阶贝塞尔配合。具体表现为，第一段和最后一段曲线为二阶贝塞尔，中间N段都为三阶贝塞尔曲线。
-         * 思路
-         * 先根据相邻点（P1，P2, P3）计算出相邻点的中点(P4， P5)，
-         * 然后再计算相邻中点的中点(P6)。
-         * 然后将（P4，P6, P5）组成的线段平移到经过P2的直线（P8，P2，P7）上。
-         * 接着根据（P4，P6，P5，P2）的坐标计算出(P7，P8)的坐标。
-         * 最后根据P7，P8等控制点画出三阶贝塞尔曲线
-         * http://blog.csdn.net/qq_17250009/article/details/51027183
-         */
-
-        // P2-->P3
-        List<PointF> tmp = calculateCurveControlPoints(mPoints.get(0), mPoints.get(1), mPoints.get(2)); //求 P2 数据点对应的控制点--->右
-        PointF c10 = tmp.get(0); // 左
-        PointF c11 = tmp.get(1); // 右
-        tmp = calculateCurveControlPoints(mPoints.get(1), mPoints.get(2), mPoints.get(3)); //求 P3 数据点对应的控制点--->左
-        PointF c20 = tmp.get(0); // 左
-        PointF c21 = tmp.get(1); // 右
-
-        startPoint = mPoints.get(1);
-        controlPoint1 = c11;
-        controlPoint2 = c20;
-        endPoint = mPoints.get(2);
-
-        // 绘制数据点和控制点
-        paint.setColor(Color.YELLOW);
-        paint.setStrokeWidth(20);
-        canvas.drawPoint(c11.x, c11.y, paint);
-        canvas.drawPoint(c20.x, c20.y, paint);
-
-        // 绘制贝塞尔曲线
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(8);
-
-        path.moveTo(startPoint.x, startPoint.y);
-        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
-
-        canvas.drawPath(path, paint);
-
-
-        // P3-->P4
-        tmp = calculateCurveControlPoints(mPoints.get(1), mPoints.get(2), mPoints.get(3));//求 P3 数据点对应的控制点--->右
-        c10 = tmp.get(0); // 左
-        c11 = tmp.get(1); // 右
-        tmp = calculateCurveControlPoints(mPoints.get(2), mPoints.get(3), mPoints.get(0));//求 P4 数据点对应的控制点--->左
-        c20 = tmp.get(0); // 左
-        c21 = tmp.get(1); // 右
-
-        startPoint = mPoints.get(2);
-        controlPoint1 = c11;
-        controlPoint2 = c20;
-        endPoint = mPoints.get(3);
-
-        // 绘制数据点和控制点
-        paint.setColor(Color.YELLOW);
-        paint.setStrokeWidth(20);
-        canvas.drawPoint(c11.x, c11.y, paint);
-        canvas.drawPoint(c20.x, c20.y, paint);
-
-        // 绘制贝塞尔曲线
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(8);
-
-        path.moveTo(startPoint.x, startPoint.y);
-        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
-
-        canvas.drawPath(path, paint);
-
-        // P4-->P1
-        tmp = calculateCurveControlPoints(mPoints.get(2), mPoints.get(3), mPoints.get(0));//求 P4 数据点对应的控制点--->右
-        c10 = tmp.get(0); // 左
-        c11 = tmp.get(1); // 右
-        tmp = calculateCurveControlPoints(mPoints.get(3), mPoints.get(0), mPoints.get(1));//求 P1 数据点对应的控制点--->左
-        c20 = tmp.get(0); // 左
-        c21 = tmp.get(1); // 右
-
-        startPoint = mPoints.get(2);
-        controlPoint1 = c11;
-        controlPoint2 = c20;
-        endPoint = mPoints.get(3);
-
-        // 绘制数据点和控制点
-        paint.setColor(Color.YELLOW);
-        paint.setStrokeWidth(20);
-        canvas.drawPoint(c11.x, c11.y, paint);
-        canvas.drawPoint(c20.x, c20.y, paint);
-
-        // 绘制贝塞尔曲线
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(8);
-
-        path.moveTo(startPoint.x, startPoint.y);
-        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
-
-        canvas.drawPath(path, paint);
-
-        // P1-->P2
-        tmp = calculateCurveControlPoints(mPoints.get(3), mPoints.get(0), mPoints.get(1));//求 P1 数据点对应的控制点--->右
-        c10 = tmp.get(0); // 左
-        c11 = tmp.get(1); // 右
-        tmp = calculateCurveControlPoints(mPoints.get(0), mPoints.get(1), mPoints.get(2));//求 P2 数据点对应的控制点--->左
-        c20 = tmp.get(0); // 左
-        c21 = tmp.get(1); // 右
-
-        startPoint = mPoints.get(2);
-        controlPoint1 = c11;
-        controlPoint2 = c20;
-        endPoint = mPoints.get(3);
-
-        // 绘制数据点和控制点
-        paint.setColor(Color.YELLOW);
-        paint.setStrokeWidth(20);
-        canvas.drawPoint(c11.x, c11.y, paint);
-        canvas.drawPoint(c20.x, c20.y, paint);
-
-        // 绘制贝塞尔曲线
-        paint.setColor(Color.BLUE);
-        paint.setStrokeWidth(8);
-
-        path.moveTo(startPoint.x, startPoint.y);
-        path.cubicTo(controlPoint1.x, controlPoint1.y, controlPoint2.x,controlPoint2.y, endPoint.x, endPoint.y);
-
-        canvas.drawPath(path, paint);
     }
 
     @Override
