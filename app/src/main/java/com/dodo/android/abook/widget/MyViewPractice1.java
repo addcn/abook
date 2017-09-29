@@ -1,5 +1,6 @@
 package com.dodo.android.abook.widget;
 
+import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -12,22 +13,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * 自定义View模板
- * Andorid官方文档中将该过程概况成了六步：
- * Draw the background
- * If necessary, save the canvas’ layers to prepare for fading
- * Draw view’s content
- * Draw children
- * If necessary, draw the fading edges and restore layers
- * Draw decorations (scrollbars for instance)
+import com.dodo.android.abook.R;
 
- * 参考文章：
- * http://gold.xitu.io/entry/57465c88c4c971005d6e4422
+/**
+ * 不断缩放的圆
+ * {@link MyViewGroup}
  *
- * Created by 10113 on 2016/9/2.
+ * https://github.com/shaohui10086/AndroidPractise/blob/master/app/src/main/java/me/shaohui/androidpractise/widget/SketchView.java
+ *
+ * http://jbcdn2.b0.upaiyun.com/2016/07/c7f309f23bcaeb3fb148567666a5b73c.gif
  */
-public class MyView extends View {
+public class MyViewPractice1 extends View {
 
     protected Context context;
     protected Paint paint;
@@ -39,12 +35,16 @@ public class MyView extends View {
     private final int DEFAULT_TEXT_COLOR = Color.BLUE;
     private final int DEFAULT_TEXT_SIZE = 0;
 
+
+    private float scale = 1f;
+
+
     /**
      * 用于代码创建控件
      *
      * @param context
      */
-    public MyView(Context context) {
+    public MyViewPractice1(Context context) {
         super(context, null);
         init(context, null);
     }
@@ -55,7 +55,7 @@ public class MyView extends View {
      * @param context
      * @param attrs
      */
-    public MyView(Context context, AttributeSet attrs) {
+    public MyViewPractice1(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
         init(context, attrs);
     }
@@ -67,7 +67,7 @@ public class MyView extends View {
      * @param attrs
      * @param defStyleAttr
      */
-    public MyView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public MyViewPractice1(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -81,7 +81,7 @@ public class MyView extends View {
      * @param defStyleRes
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public MyView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public MyViewPractice1(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
@@ -109,22 +109,22 @@ public class MyView extends View {
     }
 
     /**
-     private void initAttrs(Context context, AttributeSet attributeSet) {
-     // 自定义属性
-     if (attributeSet != null) {
-     TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.MyView, 0, 0);
-     if (attr == null) {
-     return;
-     }
-     try {
-     text = attr.getString(R.styleable.MyView_circle_text);
-     textSize = attr.getDimensionPixelSize(R.styleable.MyView_circle_text_size, DEFAULT_TEXT_SIZE);
-     textColor = attr.getColor(R.styleable.MyView_circle_text_color, DEFAULT_TEXT_COLOR);
-     } finally {
-     attr.recycle();
-     }
-     }
-     }
+    private void initAttrs(Context context, AttributeSet attributeSet) {
+        // 自定义属性
+        if (attributeSet != null) {
+            TypedArray attr = context.obtainStyledAttributes(attributeSet, R.styleable.MyView, 0, 0);
+            if (attr == null) {
+                return;
+            }
+            try {
+                text = attr.getString(R.styleable.MyView_circle_text);
+                textSize = attr.getDimensionPixelSize(R.styleable.MyView_circle_text_size, DEFAULT_TEXT_SIZE);
+                textColor = attr.getColor(R.styleable.MyView_circle_text_color, DEFAULT_TEXT_COLOR);
+            } finally {
+                attr.recycle();
+            }
+        }
+    }
      */
 
     @Override
@@ -132,29 +132,7 @@ public class MyView extends View {
         super.onDraw(canvas);
         // 不要 new 对象！不要 new 对象！！不要 new 对象！！！
 
-        //支持padding，不然padding属性无效
-        int paddingLeft = getPaddingLeft();
-        int paddingTop = getPaddingTop();
-        int paddingRight = getPaddingRight();
-        int paddingBottom = getPaddingBottom();
-
-        int width = getWidth() - paddingLeft - paddingRight;
-        int height = getHeight() - paddingTop - paddingBottom;
-
-        //canvas.drawText(emptyText, (float) ((width - textRect.width()) * 0.5), (float) (height * 0.5), paint);
-        //canvas.drawBitmap(bitmap, (float) ((width - bitmap.getWidth()) * 0.5), (float) (height * 0.5 - bitmap.getHeight() - 100), mPaint);
-
-
-        int r = getMeasuredWidth() / 2;//也可以是getMeasuredHeight()/2,本例中我们已经将宽高设置相等了
-        //圆心的横坐标为当前的View的左边起始位置+半径
-        int centerX = getLeft() + r;
-        //圆心的纵坐标为当前的View的顶部起始位置+半径
-        int centerY = getTop() + r;
-
-        Paint paint = new Paint();
-        paint.setColor(Color.GREEN);
-        //开始绘制
-        canvas.drawCircle(centerX, centerY, r, paint);
+        canvas.drawCircle(mWidth/2, mHeight/2, 100*scale, paint);
     }
 
     @Override
@@ -163,6 +141,25 @@ public class MyView extends View {
         mWidth = w;
         mHeight = h;
     }
+
+
+
+    private ValueAnimator mAnimator;
+    public void startAnimation() {
+        mAnimator = ValueAnimator.ofFloat(1, 2);
+        mAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                scale = (float) animation.getAnimatedValue();
+                postInvalidate();
+            }
+        });
+
+        mAnimator.setRepeatCount(-1);// 重复次数 -1表示无限循环
+        mAnimator.setRepeatMode(ValueAnimator.REVERSE);// 重复模式, RESTART: 重新开始 REVERSE:恢复初始状态再开始
+        mAnimator.start();
+    }
+
 
     /**
      * 测量自定义控件的长宽
@@ -175,8 +172,6 @@ public class MyView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        setMeasuredDimension(View.MeasureSpec.getSize(widthMeasureSpec), View.MeasureSpec.getSize(heightMeasureSpec));
 
         /**
         MeasureSpec有三种模式：
@@ -211,7 +206,7 @@ public class MyView extends View {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        // startAnimation();
+        startAnimation();
     }
 
     @Override
@@ -236,18 +231,6 @@ public class MyView extends View {
         return super.dispatchTouchEvent(event);
     }
 
-    /**
-     * View没有此函数
-     * @param ev
-     * @return
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return super.onInterceptTouchEvent(ev);
-    }
-     */
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -263,9 +246,4 @@ public class MyView extends View {
         float scale = getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * scale + 0.5f);
     }
-
-
-
-
-
 }

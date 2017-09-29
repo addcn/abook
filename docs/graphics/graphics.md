@@ -112,8 +112,7 @@ Matrix常用操作速查表
 - [自定义view总结](https://juejin.im/post/599d2b2e518825242238d4f6)
 - [Canvas常用操作速查表](https://github.com/GcsSloop/AndroidNote/blob/master/QuickChart/Canvas.md)
 - [http://hencoder.com/ui-1-1/](http://hencoder.com/ui-1-1/)
-
-Android 画布Canvas
-http://wuxiaolong.me/2016/08/27/Canvas/
-Android 画笔Paint
-http://wuxiaolong.me/2016/08/20/Paint/
+- [Android 画布Canvas](http://wuxiaolong.me/2016/08/27/Canvas/) ```(吴小龙同學)```
+- [Android 画笔Paint](http://wuxiaolong.me/2016/08/20/Paint/)
+- [Android显示框架：自定义View实践之绘制篇](http://www.jianshu.com/p/27665fce3bf5) ```(提供三个综合性的完整实例来辅助理解)```
+- [Android技术专题-自定义View从入门到上天](http://www.jianshu.com/p/0fb9017e821c) ```(双缓冲技術、SurfaceView)```

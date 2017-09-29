@@ -189,8 +189,10 @@ public class MadreainLoadingView extends View {
         loadingvalueAnimator = ValueAnimator.ofFloat(0, 1);
         // 设置过程的时间为2S
         loadingvalueAnimator.setDuration(2000);
+
         successvalueAnimator = ValueAnimator.ofFloat(0, 1);
         successvalueAnimator.setDuration(500);
+
         errorvalueAnimator = ValueAnimator.ofFloat(0, 1);
         errorvalueAnimator.setDuration(500);
     }

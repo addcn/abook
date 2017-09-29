@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(v);
         setContentView(R.layout.activity_main);
 
-        final SaleProgressView  saleProgressView = (SaleProgressView) findViewById(R.id.spv);
+/*        final SaleProgressView  saleProgressView = (SaleProgressView) findViewById(R.id.spv);
         SeekBar seekBar = (SeekBar) findViewById(R.id.seek);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
-        });
+        });*/
 
 
         /*SwitchButton btn = (SwitchButton) findViewById(R.id.btn);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-        initViews();
+        //initViews();
     }
 
     /**

@@ -91,42 +91,14 @@
             android:text="主页内容"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
-        <com.dodo.android.abook.widget.PhotoshopBezier
+        <com.dodo.android.abook.widget.MyViewPractice1
             android:id="@+id/btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dip"
+            android:layout_height="100dip"
             android:layout_gravity="center_horizontal"
             android:gravity="center"/>
 
-        <com.dodo.android.abook.widget.PhotoshopBezier
-            android:id="@+id/telescopicView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"/>
 
     </LinearLayout>
-    <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
 
-        <com.dodo.android.abook.widget.SaleProgressView
-            android:id="@+id/spv"
-            android:layout_width="220dp"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            app:nearOverText="nearOverText"
-            app:overText="overText"
-            />
-
-        <SeekBar
-            android:id="@+id/seek"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/spv"
-            android:layout_marginTop="50dp"
-            android:max="100" />
-
-    </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
