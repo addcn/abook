@@ -63,7 +63,7 @@
 
     </LinearLayout>
 
-    <com.dodo.android.abook.widget.DragBubbleView
+    <com.dodo.android.lab.widget.DragBubbleView
         android:id="@+id/dbv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

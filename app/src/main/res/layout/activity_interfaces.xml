@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.dodo.android.abook.features.interfaces.InterfacesActivity">
+    tools:context="com.dodo.android.lab.features.interfaces.InterfacesActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.dodo.android.abook.features.interfaces.InterfacesFragment"
+        android:name="com.dodo.android.lab.features.interfaces.InterfacesFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"

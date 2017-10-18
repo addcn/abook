@@ -1,4 +1,4 @@
-package com.dodo.android.abook.widget;
+package com.dodo.android.lab.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;

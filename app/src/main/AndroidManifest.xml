@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.dodo.android.abook"
+<manifest package="com.dodo.android.lab"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.dodo.android.lab.MainActivity"
             android:label="MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,32 +19,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".features.graphics.GraphicsActivity"
+            android:name="com.dodo.android.lab.features.graphics.GraphicsActivity"
             android:label="@string/title_activity_graphics"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".features.animation.AnimationActivity"
+            android:name="com.dodo.android.lab.features.animation.AnimationActivity"
             android:label="@string/title_activity_animation"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".features.events.EventActivity"
+            android:name="com.dodo.android.lab.features.events.EventActivity"
             android:label="@string/title_activity_event"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".features.interfaces.InterfacesActivity"
+            android:name="com.dodo.android.lab.features.interfaces.InterfacesActivity"
             android:label="@string/title_activity_interfaces"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <activity
-            android:name=".features.graphics.ChartLineActivity"
+            android:name="com.dodo.android.lab.features.graphics.ChartLineActivity"
             android:label="@string/title_activity_graphics"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".features.graphics.PercentActivity"
+            android:name="com.dodo.android.lab.features.graphics.PercentActivity"
             android:label="@string/title_activity_graphics"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

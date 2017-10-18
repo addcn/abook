@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.dodo.android.abook.widget.simplelinechart.circlepercentchart.CirclePercentChart
+    <com.dodo.android.lab.widget.simplelinechart.circlepercentchart.CirclePercentChart
         android:id="@+id/circle_percent_chart"
         android:layout_width="300dp"
         android:layout_height="300dp"

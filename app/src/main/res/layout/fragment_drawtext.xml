@@ -8,25 +8,25 @@
     tools:context=".features.graphics.DrawTextFragment">
 
 
-    <com.dodo.android.abook.widget.ClockView
+    <com.dodo.android.lab.widget.ClockView
         android:id="@+id/myView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 
-    <com.dodo.android.abook.widget.CircleProgress
+    <com.dodo.android.lab.widget.CircleProgress
         android:id="@+id/myView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 
-    <com.dodo.android.abook.widget.IQiYiLoading
+    <com.dodo.android.lab.widget.IQiYiLoading
         android:id="@+id/myView3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"/>
 
-    <com.dodo.android.abook.widget.Bezier
+    <com.dodo.android.lab.widget.Bezier
         android:id="@+id/myView4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,7 +35,7 @@
 
 
 
-    <com.dodo.android.abook.widget.MinionView
+    <com.dodo.android.lab.widget.MinionView
         android:id="@+id/myView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,13 +47,13 @@
         android:layout_height="150dp"
         android:clipChildren="false">
 
-        <com.dodo.android.abook.widget.spider.SpiderWebScoreView
+        <com.dodo.android.lab.widget.spider.SpiderWebScoreView
             android:id="@+id/spiderWeb_mainActivity_1"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center" />
 
-        <com.dodo.android.abook.widget.spider.CircularLayout
+        <com.dodo.android.lab.widget.spider.CircularLayout
             android:id="@+id/layout_mainActivity_circular1"
             android:layout_width="100dp"
             android:layout_height="100dp"
